@@ -27,6 +27,10 @@ static UIWindow *g_playerControlWindow = nil;
   if (self) {
     [self setupUI];
     [self startDisplayTimer];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(handleTimerExpired)
+                                                 name:@"AudioTimerExpired"
+                                               object:nil];
   }
   return self;
 }
@@ -140,6 +144,15 @@ static UIWindow *g_playerControlWindow = nil;
   [_playPauseButton setImage:[UIImage systemImageNamed:imgName]
                     forState:UIControlStateNormal];
 }
+
+- (void)handleTimerExpired {
+  dispatch_async(dispatch_get_main_queue(), ^{
+    self.isPlaying = NO;
+    [self updateTimerDisplay]; // Ensure timer button resets as well
+  });
+}
+
+#pragma mark - Global Control
 
 + (void)showGlobalControlBar {
   static dispatch_once_t onceToken;

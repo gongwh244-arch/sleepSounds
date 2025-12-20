@@ -41,6 +41,12 @@
                                            selector:@selector(vipStatusChanged)
                                                name:@"VIPStatusChanged"
                                              object:nil];
+
+  [[NSNotificationCenter defaultCenter]
+      addObserver:self
+         selector:@selector(handleTimerExpired)
+             name:@"AudioTimerExpired"
+           object:nil];
 }
 
 - (void)dealloc {
@@ -254,6 +260,18 @@
     }
   }
   [[PlayerControlView sharedInstance] setIsPlaying:anyPlaying];
+}
+
+- (void)handleTimerExpired {
+  dispatch_async(dispatch_get_main_queue(), ^{
+    for (NSArray *section in self.sections) {
+      for (SoundItem *item in section) {
+        item.isPlaying = NO;
+      }
+    }
+    [self.collectionView reloadData];
+    [self updatePlayerControlState];
+  });
 }
 
 #pragma mark - PlayerControlDelegate

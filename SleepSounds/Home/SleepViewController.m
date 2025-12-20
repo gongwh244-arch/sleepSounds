@@ -37,6 +37,12 @@
                                            selector:@selector(vipStatusChanged)
                                                name:@"VIPStatusChanged"
                                              object:nil];
+
+  [[NSNotificationCenter defaultCenter]
+      addObserver:self
+         selector:@selector(handleTimerExpired)
+             name:@"AudioTimerExpired"
+           object:nil];
 }
 
 - (void)dealloc {
@@ -160,6 +166,16 @@
   [[PlayerControlView sharedInstance] setIsPlaying:anyPlaying];
 }
 
+- (void)handleTimerExpired {
+  dispatch_async(dispatch_get_main_queue(), ^{
+    for (SoundItem *item in self.soundItems) {
+      item.isPlaying = NO;
+    }
+    [self.collectionView reloadData];
+    [self updatePlayerControlState];
+  });
+}
+
 #pragma mark - PlayerControlDelegate
 
 - (void)didTapPlayPause {
@@ -196,17 +212,16 @@
       alertControllerWithTitle:@"Set Sleep Timer"
                        message:nil
                 preferredStyle:UIAlertControllerStyleActionSheet];
-    
+
 #if DEBUG
-    [alert addAction:[UIAlertAction
-                         actionWithTitle:@"10s"
-                                   style:UIAlertActionStyleDefault
-                                 handler:^(UIAlertAction *_Nonnull action) {
-                                   [[AudioPlayerManager sharedManager]
-                                       startTimerWithDuration:10];
-                                 }]];
+  [alert addAction:[UIAlertAction
+                       actionWithTitle:@"10s"
+                                 style:UIAlertActionStyleDefault
+                               handler:^(UIAlertAction *_Nonnull action) {
+                                 [[AudioPlayerManager sharedManager]
+                                     startTimerWithDuration:10];
+                               }]];
 #endif
-    
 
   [alert addAction:[UIAlertAction
                        actionWithTitle:@"15 Minutes"

@@ -40,6 +40,12 @@
 
   [self loadData];
   [self setupTableView];
+
+  [[NSNotificationCenter defaultCenter]
+      addObserver:self
+         selector:@selector(handleTimerExpired)
+             name:@"AudioTimerExpired"
+           object:nil];
 }
 
 - (void)loadData {
@@ -48,6 +54,13 @@
 
 - (void)dismissSelf {
   [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (void)handleTimerExpired {
+  dispatch_async(dispatch_get_main_queue(), ^{
+    [self loadData];
+    [self.tableView reloadData];
+  });
 }
 
 - (void)setupTableView {
