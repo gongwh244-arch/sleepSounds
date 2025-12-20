@@ -24,6 +24,9 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)cancelTimer;
 - (NSTimeInterval)remainingTime;
 
+@property(nonatomic, strong, readonly)
+    NSArray<NSString *> *lastPlayedSoundNames;
+
 @end
 
 NS_ASSUME_NONNULL_END

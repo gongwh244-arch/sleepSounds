@@ -52,11 +52,10 @@ static UIWindow *g_playerControlWindow = nil;
   NSTimeInterval remaining = [[AudioPlayerManager sharedManager] remainingTime];
 
   if (remaining > 0) {
-    int hours = (int)(remaining / 3600);
-    int minutes = (int)((remaining - hours * 3600) / 60);
-    int seconds = (int)(remaining - hours * 3600 - minutes * 60);
+    int minutes = (int)(remaining / 60);
+    int seconds = (int)(remaining - minutes * 60);
     NSString *timeStr = [NSString
-        stringWithFormat:@"%02d时%02d分%02d秒", hours, minutes, seconds];
+        stringWithFormat:@"%02d分%02d秒", minutes, seconds];
 
     // 优化：仅在内容变化时更新，并禁用默认动画，防止闪烁
     if (![[self.timerButton titleForState:UIControlStateNormal]
@@ -172,7 +171,7 @@ static UIWindow *g_playerControlWindow = nil;
 
     [playerControl mas_makeConstraints:^(MASConstraintMaker *make) {
       make.centerX.equalTo(rootVC.view);
-      make.width.mas_equalTo(220); // 稍微加宽一点看上去更和谐
+      make.width.mas_equalTo(160); // 稍微加宽一点看上去更和谐
       make.bottom.equalTo(rootVC.view.mas_bottom)
           .offset(-20 - [UIDevice kd_tabBarFullHeight]);
       make.height.mas_equalTo(60);

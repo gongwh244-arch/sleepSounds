@@ -277,15 +277,52 @@
 #pragma mark - PlayerControlDelegate
 
 - (void)didTapPlayPause {
-  // Basic Pause All implementation
-  [[AudioPlayerManager sharedManager] stopAllSounds];
+  BOOL anyPlaying = NO;
   for (NSArray *section in self.sections) {
     for (SoundItem *item in section) {
-      item.isPlaying = NO;
+      if (item.isPlaying) {
+        anyPlaying = YES;
+        break;
+      }
     }
   }
+
+  if (anyPlaying) {
+    [[AudioPlayerManager sharedManager] stopAllSounds];
+    for (NSArray *section in self.sections) {
+      for (SoundItem *item in section) {
+        item.isPlaying = NO;
+      }
+    }
+  } else {
+    NSArray *lastPlayed =
+        [AudioPlayerManager sharedManager].lastPlayedSoundNames;
+    if (lastPlayed.count > 0) {
+      for (NSArray *section in self.sections) {
+        for (SoundItem *item in section) {
+          if ([lastPlayed containsObject:item.name]) {
+            item.isPlaying = YES;
+            [[AudioPlayerManager sharedManager] playSoundItem:item loop:YES];
+          }
+        }
+      }
+    } else {
+      // Default fallback
+      for (NSArray *section in self.sections) {
+        for (SoundItem *item in section) {
+          if (!item.isLocked) {
+            item.isPlaying = YES;
+            [[AudioPlayerManager sharedManager] playSoundItem:item loop:YES];
+            goto end_loop;
+          }
+        }
+      }
+    end_loop:;
+    }
+  }
+
   [self.collectionView reloadData];
-  [[PlayerControlView sharedInstance] setIsPlaying:NO];
+  [self updatePlayerControlState];
 }
 
 - (void)didTapTimer {

@@ -192,18 +192,30 @@
     for (SoundItem *item in self.soundItems) {
       item.isPlaying = NO;
     }
-    [self.collectionView reloadData];
   } else {
-    for (SoundItem *item in self.soundItems) {
-      if (!item.isLocked) {
-        item.isPlaying = YES;
-        [[AudioPlayerManager sharedManager] playSoundItem:item loop:YES];
-        break;
+    NSArray *lastPlayed =
+        [AudioPlayerManager sharedManager].lastPlayedSoundNames;
+    if (lastPlayed.count > 0) {
+      // 播放上一次记录的所有声音
+      for (SoundItem *item in self.soundItems) {
+        if ([lastPlayed containsObject:item.name]) {
+          item.isPlaying = YES;
+          [[AudioPlayerManager sharedManager] playSoundItem:item loop:YES];
+        }
+      }
+    } else {
+      // 如果没有记录，播放第一个未锁定的
+      for (SoundItem *item in self.soundItems) {
+        if (!item.isLocked) {
+          item.isPlaying = YES;
+          [[AudioPlayerManager sharedManager] playSoundItem:item loop:YES];
+          break;
+        }
       }
     }
-    [self.collectionView reloadData];
   }
 
+  [self.collectionView reloadData];
   [self updatePlayerControlState];
 }
 
@@ -211,7 +223,7 @@
   UIAlertController *alert = [UIAlertController
       alertControllerWithTitle:@"Set Sleep Timer"
                        message:nil
-                preferredStyle:UIAlertControllerStyleActionSheet];
+                preferredStyle:UIAlertControllerStyleAlert];
 
 #if DEBUG
   [alert addAction:[UIAlertAction

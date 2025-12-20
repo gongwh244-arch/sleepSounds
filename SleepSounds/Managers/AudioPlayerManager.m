@@ -8,6 +8,8 @@
     NSMutableDictionary<NSString *, AVAudioPlayer *> *activePlayers;
 @property(nonatomic, strong) NSTimer *stopTimer;
 @property(nonatomic, assign) NSTimeInterval stopTime;
+@property(nonatomic, strong, readwrite)
+    NSArray<NSString *> *lastPlayedSoundNames;
 
 @end
 
@@ -77,6 +79,14 @@
   player.numberOfLoops = loop ? -1 : 0;
   [player play];
   self.activePlayers[soundName] = player;
+
+  // 更新最后播放记录
+  if (![self.lastPlayedSoundNames containsObject:soundName]) {
+    NSMutableArray *temp =
+        [NSMutableArray arrayWithArray:self.lastPlayedSoundNames ?: @[]];
+    [temp addObject:soundName];
+    self.lastPlayedSoundNames = [temp copy];
+  }
 }
 
 - (void)stopSound:(NSString *)soundName {
@@ -88,6 +98,9 @@
 }
 
 - (void)stopAllSounds {
+  if (self.activePlayers.count > 0) {
+    self.lastPlayedSoundNames = self.activePlayers.allKeys;
+  }
   for (NSString *name in self.activePlayers.allKeys) {
     [self stopSound:name];
   }
@@ -149,7 +162,7 @@
 }
 
 - (void)timerFired {
-  NSTimeInterval fadeDuration = 5.0;
+  NSTimeInterval fadeDuration = 1.0;
   for (AVAudioPlayer *player in self.activePlayers.allValues) {
     [player setVolume:0.0 fadeDuration:fadeDuration];
   }
