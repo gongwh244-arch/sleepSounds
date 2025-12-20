@@ -1,0 +1,623 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		10F1F1D77D5E43CAB941C2A4 /* Pods_SleepSounds.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C3B164A6CB0212ABEE15AAAF /* Pods_SleepSounds.framework */; };
+		1EC118232EF540D30064167C /* BabyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1EC117F92EF540D30064167C /* BabyViewController.m */; };
+		1EC118242EF540D30064167C /* BreathingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1EC117FB2EF540D30064167C /* BreathingViewController.m */; };
+		1EC118252EF540D30064167C /* MainTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1EC117FD2EF540D30064167C /* MainTabBarController.m */; };
+		1EC118262EF540D30064167C /* MixerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1EC117FF2EF540D30064167C /* MixerViewController.m */; };
+		1EC118272EF540D30064167C /* ScreenLightViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1EC118012EF540D30064167C /* ScreenLightViewController.m */; };
+		1EC118282EF540D30064167C /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1EC118032EF540D30064167C /* SettingsViewController.m */; };
+		1EC118292EF540D30064167C /* SleepViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1EC118052EF540D30064167C /* SleepViewController.m */; };
+		1EC1182A2EF540D30064167C /* ToolboxViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1EC118072EF540D30064167C /* ToolboxViewController.m */; };
+		1EC1182B2EF540D30064167C /* AudioPlayerManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 1EC1180A2EF540D30064167C /* AudioPlayerManager.m */; };
+		1EC1182C2EF540D30064167C /* SoundItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 1EC1180D2EF540D30064167C /* SoundItem.m */; };
+		1EC1182D2EF540D30064167C /* PlayerControlView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1EC118112EF540D30064167C /* PlayerControlView.m */; };
+		1EC1182E2EF540D30064167C /* SoundCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1EC118132EF540D30064167C /* SoundCell.m */; };
+		1EC1182F2EF540D30064167C /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1EC118162EF540D30064167C /* AppDelegate.m */; };
+		1EC118302EF540D30064167C /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 1EC1181B2EF540D30064167C /* main.m */; };
+		1EC118332EF540D30064167C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1EC118172EF540D30064167C /* Assets.xcassets */; };
+		1EC118352EF540D30064167C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1EC1181A2EF540D30064167C /* LaunchScreen.storyboard */; };
+		1EC118392EF542B20064167C /* WQViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1EC118382EF542B20064167C /* WQViewController.m */; };
+		1EC1183E2EF661230064167C /* DataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 1EC1183D2EF661230064167C /* DataManager.m */; };
+		1EC118402EF663CB0064167C /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1EC1183F2EF663CB0064167C /* GoogleService-Info.plist */; };
+		1EC118422EF67F0F0064167C /* UIDeviceExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EC118412EF67F0F0064167C /* UIDeviceExtension.swift */; };
+		1EC118472EF681F70064167C /* KDGlobalDefine.m in Sources */ = {isa = PBXBuildFile; fileRef = 1EC118462EF681F70064167C /* KDGlobalDefine.m */; };
+		1EC1184A2EF687240064167C /* UIColor+Hex.m in Sources */ = {isa = PBXBuildFile; fileRef = 1EC118492EF687240064167C /* UIColor+Hex.m */; };
+		1EC118522EF6C2370064167C /* underwater-white-noise-46423.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 1EC118502EF6C2370064167C /* underwater-white-noise-46423.mp3 */; };
+		1EC118532EF6C2370064167C /* birds-chirping-75156.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 1EC1184C2EF6C2370064167C /* birds-chirping-75156.mp3 */; };
+		1EC118542EF6C2370064167C /* ceiling-fan-indoorwav-14778.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 1EC1184D2EF6C2370064167C /* ceiling-fan-indoorwav-14778.mp3 */; };
+		1EC118552EF6C2370064167C /* wind-blowing-sfx-09-423678.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 1EC118512EF6C2370064167C /* wind-blowing-sfx-09-423678.mp3 */; };
+		1EC118562EF6C2370064167C /* tv-white-noise-152056.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 1EC1184F2EF6C2370064167C /* tv-white-noise-152056.mp3 */; };
+		1EC118572EF6C2370064167C /* Jesse Pinkman's answer tone.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 1EC1184E2EF6C2370064167C /* Jesse Pinkman's answer tone.mp3 */; };
+		1EC118592EF6C7A10064167C /* sounds_config.json in Resources */ = {isa = PBXBuildFile; fileRef = 1EC118582EF6C7A10064167C /* sounds_config.json */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		1EC117B22EF534A40064167C /* SleepSounds.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SleepSounds.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		1EC117F82EF540D30064167C /* BabyViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BabyViewController.h; sourceTree = "<group>"; };
+		1EC117F92EF540D30064167C /* BabyViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BabyViewController.m; sourceTree = "<group>"; };
+		1EC117FA2EF540D30064167C /* BreathingViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BreathingViewController.h; sourceTree = "<group>"; };
+		1EC117FB2EF540D30064167C /* BreathingViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BreathingViewController.m; sourceTree = "<group>"; };
+		1EC117FC2EF540D30064167C /* MainTabBarController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MainTabBarController.h; sourceTree = "<group>"; };
+		1EC117FD2EF540D30064167C /* MainTabBarController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MainTabBarController.m; sourceTree = "<group>"; };
+		1EC117FE2EF540D30064167C /* MixerViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MixerViewController.h; sourceTree = "<group>"; };
+		1EC117FF2EF540D30064167C /* MixerViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MixerViewController.m; sourceTree = "<group>"; };
+		1EC118002EF540D30064167C /* ScreenLightViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ScreenLightViewController.h; sourceTree = "<group>"; };
+		1EC118012EF540D30064167C /* ScreenLightViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ScreenLightViewController.m; sourceTree = "<group>"; };
+		1EC118022EF540D30064167C /* SettingsViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SettingsViewController.h; sourceTree = "<group>"; };
+		1EC118032EF540D30064167C /* SettingsViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SettingsViewController.m; sourceTree = "<group>"; };
+		1EC118042EF540D30064167C /* SleepViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SleepViewController.h; sourceTree = "<group>"; };
+		1EC118052EF540D30064167C /* SleepViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SleepViewController.m; sourceTree = "<group>"; };
+		1EC118062EF540D30064167C /* ToolboxViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ToolboxViewController.h; sourceTree = "<group>"; };
+		1EC118072EF540D30064167C /* ToolboxViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ToolboxViewController.m; sourceTree = "<group>"; };
+		1EC118092EF540D30064167C /* AudioPlayerManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AudioPlayerManager.h; sourceTree = "<group>"; };
+		1EC1180A2EF540D30064167C /* AudioPlayerManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AudioPlayerManager.m; sourceTree = "<group>"; };
+		1EC1180C2EF540D30064167C /* SoundItem.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SoundItem.h; sourceTree = "<group>"; };
+		1EC1180D2EF540D30064167C /* SoundItem.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SoundItem.m; sourceTree = "<group>"; };
+		1EC118102EF540D30064167C /* PlayerControlView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PlayerControlView.h; sourceTree = "<group>"; };
+		1EC118112EF540D30064167C /* PlayerControlView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PlayerControlView.m; sourceTree = "<group>"; };
+		1EC118122EF540D30064167C /* SoundCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SoundCell.h; sourceTree = "<group>"; };
+		1EC118132EF540D30064167C /* SoundCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SoundCell.m; sourceTree = "<group>"; };
+		1EC118152EF540D30064167C /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		1EC118162EF540D30064167C /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		1EC118172EF540D30064167C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		1EC118182EF540D30064167C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		1EC118192EF540D30064167C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		1EC1181B2EF540D30064167C /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		1EC118372EF542B20064167C /* WQViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WQViewController.h; sourceTree = "<group>"; };
+		1EC118382EF542B20064167C /* WQViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WQViewController.m; sourceTree = "<group>"; };
+		1EC1183C2EF661230064167C /* DataManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DataManager.h; sourceTree = "<group>"; };
+		1EC1183D2EF661230064167C /* DataManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DataManager.m; sourceTree = "<group>"; };
+		1EC1183F2EF663CB0064167C /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		1EC118402EF661230064167D /* PrefixHeader.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PrefixHeader.pch; sourceTree = "<group>"; };
+		1EC118412EF67F0F0064167C /* UIDeviceExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIDeviceExtension.swift; sourceTree = "<group>"; };
+		1EC118432EF67F120064167C /* SleepSounds-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SleepSounds-Bridging-Header.h"; sourceTree = "<group>"; };
+		1EC118452EF681F70064167C /* KDGlobalDefine.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KDGlobalDefine.h; sourceTree = "<group>"; };
+		1EC118462EF681F70064167C /* KDGlobalDefine.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KDGlobalDefine.m; sourceTree = "<group>"; };
+		1EC118482EF687240064167C /* UIColor+Hex.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIColor+Hex.h"; sourceTree = "<group>"; };
+		1EC118492EF687240064167C /* UIColor+Hex.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIColor+Hex.m"; sourceTree = "<group>"; };
+		1EC1184C2EF6C2370064167C /* birds-chirping-75156.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "birds-chirping-75156.mp3"; sourceTree = "<group>"; };
+		1EC1184D2EF6C2370064167C /* ceiling-fan-indoorwav-14778.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "ceiling-fan-indoorwav-14778.mp3"; sourceTree = "<group>"; };
+		1EC1184E2EF6C2370064167C /* Jesse Pinkman's answer tone.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "Jesse Pinkman's answer tone.mp3"; sourceTree = "<group>"; };
+		1EC1184F2EF6C2370064167C /* tv-white-noise-152056.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "tv-white-noise-152056.mp3"; sourceTree = "<group>"; };
+		1EC118502EF6C2370064167C /* underwater-white-noise-46423.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "underwater-white-noise-46423.mp3"; sourceTree = "<group>"; };
+		1EC118512EF6C2370064167C /* wind-blowing-sfx-09-423678.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "wind-blowing-sfx-09-423678.mp3"; sourceTree = "<group>"; };
+		1EC118582EF6C7A10064167C /* sounds_config.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = sounds_config.json; sourceTree = "<group>"; };
+		3BB2B6725CFD6037EED7D838 /* Pods-SleepSounds.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SleepSounds.debug.xcconfig"; path = "Target Support Files/Pods-SleepSounds/Pods-SleepSounds.debug.xcconfig"; sourceTree = "<group>"; };
+		7CE7CE26FD7BCF8E68776A16 /* Pods-SleepSounds.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SleepSounds.release.xcconfig"; path = "Target Support Files/Pods-SleepSounds/Pods-SleepSounds.release.xcconfig"; sourceTree = "<group>"; };
+		C3B164A6CB0212ABEE15AAAF /* Pods_SleepSounds.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SleepSounds.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		1EC117AF2EF534A40064167C /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				10F1F1D77D5E43CAB941C2A4 /* Pods_SleepSounds.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		069BE07D5D49BE2A7BA92DD8 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				3BB2B6725CFD6037EED7D838 /* Pods-SleepSounds.debug.xcconfig */,
+				7CE7CE26FD7BCF8E68776A16 /* Pods-SleepSounds.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
+		1EC117A92EF534A40064167C = {
+			isa = PBXGroup;
+			children = (
+				1EC118222EF540D30064167C /* SleepSounds */,
+				1EC117B32EF534A40064167C /* Products */,
+				069BE07D5D49BE2A7BA92DD8 /* Pods */,
+				EE4522F79B5CD9EEECEC9D42 /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		1EC117B32EF534A40064167C /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				1EC117B22EF534A40064167C /* SleepSounds.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		1EC118082EF540D30064167C /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				1EC118372EF542B20064167C /* WQViewController.h */,
+				1EC118382EF542B20064167C /* WQViewController.m */,
+				1EC117F82EF540D30064167C /* BabyViewController.h */,
+				1EC117F92EF540D30064167C /* BabyViewController.m */,
+				1EC117FA2EF540D30064167C /* BreathingViewController.h */,
+				1EC117FB2EF540D30064167C /* BreathingViewController.m */,
+				1EC117FC2EF540D30064167C /* MainTabBarController.h */,
+				1EC117FD2EF540D30064167C /* MainTabBarController.m */,
+				1EC117FE2EF540D30064167C /* MixerViewController.h */,
+				1EC117FF2EF540D30064167C /* MixerViewController.m */,
+				1EC118002EF540D30064167C /* ScreenLightViewController.h */,
+				1EC118012EF540D30064167C /* ScreenLightViewController.m */,
+				1EC118022EF540D30064167C /* SettingsViewController.h */,
+				1EC118032EF540D30064167C /* SettingsViewController.m */,
+				1EC118062EF540D30064167C /* ToolboxViewController.h */,
+				1EC118072EF540D30064167C /* ToolboxViewController.m */,
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
+		1EC1180B2EF540D30064167C /* Managers */ = {
+			isa = PBXGroup;
+			children = (
+				1EC1183C2EF661230064167C /* DataManager.h */,
+				1EC1183D2EF661230064167C /* DataManager.m */,
+				1EC118092EF540D30064167C /* AudioPlayerManager.h */,
+				1EC1180A2EF540D30064167C /* AudioPlayerManager.m */,
+			);
+			path = Managers;
+			sourceTree = "<group>";
+		};
+		1EC1180E2EF540D30064167C /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				1EC1180C2EF540D30064167C /* SoundItem.h */,
+				1EC1180D2EF540D30064167C /* SoundItem.m */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		1EC1180F2EF540D30064167C /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				1EC118582EF6C7A10064167C /* sounds_config.json */,
+				1EC1184C2EF6C2370064167C /* birds-chirping-75156.mp3 */,
+				1EC1184D2EF6C2370064167C /* ceiling-fan-indoorwav-14778.mp3 */,
+				1EC1184E2EF6C2370064167C /* Jesse Pinkman's answer tone.mp3 */,
+				1EC1184F2EF6C2370064167C /* tv-white-noise-152056.mp3 */,
+				1EC118502EF6C2370064167C /* underwater-white-noise-46423.mp3 */,
+				1EC118512EF6C2370064167C /* wind-blowing-sfx-09-423678.mp3 */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		1EC118142EF540D30064167C /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				1EC118102EF540D30064167C /* PlayerControlView.h */,
+				1EC118112EF540D30064167C /* PlayerControlView.m */,
+				1EC118122EF540D30064167C /* SoundCell.h */,
+				1EC118132EF540D30064167C /* SoundCell.m */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		1EC118222EF540D30064167C /* SleepSounds */ = {
+			isa = PBXGroup;
+			children = (
+				1EC1184B2EF6C1BA0064167C /* Home */,
+				1EC118082EF540D30064167C /* Controllers */,
+				1EC1180B2EF540D30064167C /* Managers */,
+				1EC1180E2EF540D30064167C /* Models */,
+				1EC1180F2EF540D30064167C /* Resources */,
+				1EC118142EF540D30064167C /* Views */,
+				1EC118442EF67F1A0064167C /* Util */,
+				1EC118152EF540D30064167C /* AppDelegate.h */,
+				1EC118162EF540D30064167C /* AppDelegate.m */,
+				1EC118172EF540D30064167C /* Assets.xcassets */,
+				1EC1183F2EF663CB0064167C /* GoogleService-Info.plist */,
+				1EC118402EF661230064167D /* PrefixHeader.pch */,
+				1EC118182EF540D30064167C /* Info.plist */,
+				1EC1181A2EF540D30064167C /* LaunchScreen.storyboard */,
+				1EC1181B2EF540D30064167C /* main.m */,
+				1EC118432EF67F120064167C /* SleepSounds-Bridging-Header.h */,
+			);
+			path = SleepSounds;
+			sourceTree = "<group>";
+		};
+		1EC118442EF67F1A0064167C /* Util */ = {
+			isa = PBXGroup;
+			children = (
+				1EC118452EF681F70064167C /* KDGlobalDefine.h */,
+				1EC118462EF681F70064167C /* KDGlobalDefine.m */,
+				1EC118482EF687240064167C /* UIColor+Hex.h */,
+				1EC118492EF687240064167C /* UIColor+Hex.m */,
+				1EC118412EF67F0F0064167C /* UIDeviceExtension.swift */,
+			);
+			path = Util;
+			sourceTree = "<group>";
+		};
+		1EC1184B2EF6C1BA0064167C /* Home */ = {
+			isa = PBXGroup;
+			children = (
+				1EC118042EF540D30064167C /* SleepViewController.h */,
+				1EC118052EF540D30064167C /* SleepViewController.m */,
+			);
+			path = Home;
+			sourceTree = "<group>";
+		};
+		EE4522F79B5CD9EEECEC9D42 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				C3B164A6CB0212ABEE15AAAF /* Pods_SleepSounds.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		1EC117B12EF534A40064167C /* SleepSounds */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 1EC117CA2EF534A60064167C /* Build configuration list for PBXNativeTarget "SleepSounds" */;
+			buildPhases = (
+				70699DA9648AC2653186468D /* [CP] Check Pods Manifest.lock */,
+				1EC117AE2EF534A40064167C /* Sources */,
+				1EC117AF2EF534A40064167C /* Frameworks */,
+				1EC117B02EF534A40064167C /* Resources */,
+				122C3F45B9A370A3ADF6C178 /* [CP] Embed Pods Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = SleepSounds;
+			productName = SleepSounds;
+			productReference = 1EC117B22EF534A40064167C /* SleepSounds.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		1EC117AA2EF534A40064167C /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastUpgradeCheck = 1630;
+				TargetAttributes = {
+					1EC117B12EF534A40064167C = {
+						CreatedOnToolsVersion = 16.3;
+						LastSwiftMigration = 1630;
+					};
+				};
+			};
+			buildConfigurationList = 1EC117AD2EF534A40064167C /* Build configuration list for PBXProject "SleepSounds" */;
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 1EC117A92EF534A40064167C;
+			minimizedProjectReferenceProxies = 1;
+			preferredProjectObjectVersion = 77;
+			productRefGroup = 1EC117B32EF534A40064167C /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				1EC117B12EF534A40064167C /* SleepSounds */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		1EC117B02EF534A40064167C /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1EC118332EF540D30064167C /* Assets.xcassets in Resources */,
+				1EC118522EF6C2370064167C /* underwater-white-noise-46423.mp3 in Resources */,
+				1EC118532EF6C2370064167C /* birds-chirping-75156.mp3 in Resources */,
+				1EC118542EF6C2370064167C /* ceiling-fan-indoorwav-14778.mp3 in Resources */,
+				1EC118552EF6C2370064167C /* wind-blowing-sfx-09-423678.mp3 in Resources */,
+				1EC118562EF6C2370064167C /* tv-white-noise-152056.mp3 in Resources */,
+				1EC118572EF6C2370064167C /* Jesse Pinkman's answer tone.mp3 in Resources */,
+				1EC118592EF6C7A10064167C /* sounds_config.json in Resources */,
+				1EC118402EF663CB0064167C /* GoogleService-Info.plist in Resources */,
+				1EC118352EF540D30064167C /* LaunchScreen.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		122C3F45B9A370A3ADF6C178 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-SleepSounds/Pods-SleepSounds-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-SleepSounds/Pods-SleepSounds-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-SleepSounds/Pods-SleepSounds-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		70699DA9648AC2653186468D /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-SleepSounds-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		1EC117AE2EF534A40064167C /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1EC118472EF681F70064167C /* KDGlobalDefine.m in Sources */,
+				1EC1184A2EF687240064167C /* UIColor+Hex.m in Sources */,
+				1EC118232EF540D30064167C /* BabyViewController.m in Sources */,
+				1EC118242EF540D30064167C /* BreathingViewController.m in Sources */,
+				1EC118252EF540D30064167C /* MainTabBarController.m in Sources */,
+				1EC118262EF540D30064167C /* MixerViewController.m in Sources */,
+				1EC118272EF540D30064167C /* ScreenLightViewController.m in Sources */,
+				1EC118282EF540D30064167C /* SettingsViewController.m in Sources */,
+				1EC118292EF540D30064167C /* SleepViewController.m in Sources */,
+				1EC1182A2EF540D30064167C /* ToolboxViewController.m in Sources */,
+				1EC1182B2EF540D30064167C /* AudioPlayerManager.m in Sources */,
+				1EC1182C2EF540D30064167C /* SoundItem.m in Sources */,
+				1EC1182D2EF540D30064167C /* PlayerControlView.m in Sources */,
+				1EC1182E2EF540D30064167C /* SoundCell.m in Sources */,
+				1EC1182F2EF540D30064167C /* AppDelegate.m in Sources */,
+				1EC1183E2EF661230064167C /* DataManager.m in Sources */,
+				1EC118302EF540D30064167C /* main.m in Sources */,
+				1EC118392EF542B20064167C /* WQViewController.m in Sources */,
+				1EC118422EF67F0F0064167C /* UIDeviceExtension.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		1EC1181A2EF540D30064167C /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				1EC118192EF540D30064167C /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		1EC117CB2EF534A60064167C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 3BB2B6725CFD6037EED7D838 /* Pods-SleepSounds.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = C4U3SU44TW;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = SleepSounds/PrefixHeader.pch;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = SleepSounds/Info.plist;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.gwq.SleepSounds;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "SleepSounds/SleepSounds-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 6.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		1EC117CC2EF534A60064167C /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 7CE7CE26FD7BCF8E68776A16 /* Pods-SleepSounds.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = C4U3SU44TW;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = SleepSounds/PrefixHeader.pch;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = SleepSounds/Info.plist;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.gwq.SleepSounds;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "SleepSounds/SleepSounds-Bridging-Header.h";
+				SWIFT_VERSION = 6.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		1EC117CD2EF534A60064167C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = C4U3SU44TW;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.4;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		1EC117CE2EF534A60064167C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = C4U3SU44TW;
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.4;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		1EC117AD2EF534A40064167C /* Build configuration list for PBXProject "SleepSounds" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1EC117CD2EF534A60064167C /* Debug */,
+				1EC117CE2EF534A60064167C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		1EC117CA2EF534A60064167C /* Build configuration list for PBXNativeTarget "SleepSounds" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1EC117CB2EF534A60064167C /* Debug */,
+				1EC117CC2EF534A60064167C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 1EC117AA2EF534A40064167C /* Project object */;
+}

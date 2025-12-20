@@ -1,0 +1,50 @@
+[
+    {
+        "name": "Jesse Pinkman",
+        "iconName": "person.fill",
+        "category": "sleep",
+        "subCategory": "fun",
+        "fileName": "Jesse Pinkman's answer tone",
+        "isLocked": false
+    },
+    {
+        "name": "Birds",
+        "iconName": "bird.fill",
+        "category": "sleep",
+        "subCategory": "nature",
+        "fileName": "birds-chirping-75156",
+        "isLocked": false
+    },
+    {
+        "name": "Ceiling Fan",
+        "iconName": "wind",
+        "category": "sleep",
+        "subCategory": "white_noise",
+        "fileName": "ceiling-fan-indoorwav-14778",
+        "isLocked": false
+    },
+    {
+        "name": "TV Static",
+        "iconName": "tv.fill",
+        "category": "baby",
+        "subCategory": "white_noise",
+        "fileName": "tv-white-noise-152056",
+        "isLocked": false
+    },
+    {
+        "name": "Underwater",
+        "iconName": "drop.fill",
+        "category": "baby",
+        "subCategory": "nature",
+        "fileName": "underwater-white-noise-46423",
+        "isLocked": false
+    },
+    {
+        "name": "Wind",
+        "iconName": "wind",
+        "category": "sleep",
+        "subCategory": "nature",
+        "fileName": "wind-blowing-sfx-09-423678",
+        "isLocked": true
+    }
+]

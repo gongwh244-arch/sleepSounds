@@ -1,0 +1,122 @@
+{
+  "sounds": {
+    "sleep_rain": {
+      "name": "雨声",
+      "iconName": "cloud.rain.fill",
+      "category": "sleep",
+      "isLocked": false
+    },
+    "sleep_ocean": {
+      "name": "海浪",
+      "iconName": "water.waves",
+      "category": "sleep",
+      "isLocked": false
+    },
+    "sleep_forest": {
+      "name": "森林",
+      "iconName": "leaf.fill",
+      "category": "sleep",
+      "isLocked": true
+    },
+    "sleep_thunder": {
+      "name": "雷声",
+      "iconName": "cloud.bolt.rain.fill",
+      "category": "sleep",
+      "isLocked": true
+    },
+    "sleep_fire": {
+      "name": "篝火",
+      "iconName": "flame.fill",
+      "category": "sleep",
+      "isLocked": false
+    },
+    "sleep_wind": {
+      "name": "风声",
+      "iconName": "wind",
+      "category": "sleep",
+      "isLocked": true
+    },
+    "sleep_stream": {
+      "name": "溪流",
+      "iconName": "drop.fill",
+      "category": "sleep",
+      "isLocked": false
+    },
+    "sleep_night": {
+      "name": "夜晚",
+      "iconName": "moon.stars.fill",
+      "category": "sleep",
+      "isLocked": true
+    },
+    "baby_shush1": {
+      "name": "嘘声1",
+      "iconName": "speaker.wave.2.fill",
+      "category": "baby",
+      "subCategory": "shush",
+      "isLocked": false
+    },
+    "baby_shush2": {
+      "name": "嘘声2",
+      "iconName": "speaker.wave.3.fill",
+      "category": "baby",
+      "subCategory": "shush",
+      "isLocked": true
+    },
+    "baby_shush3": {
+      "name": "嘘声3",
+      "iconName": "speaker.wave.1.fill",
+      "category": "baby",
+      "subCategory": "shush",
+      "isLocked": false
+    },
+    "baby_hairdryer": {
+      "name": "吹风机",
+      "iconName": "fan.fill",
+      "category": "baby",
+      "subCategory": "white_noise",
+      "isLocked": false
+    },
+    "baby_vacuum": {
+      "name": "吸尘器",
+      "iconName": "circle.fill",
+      "category": "baby",
+      "subCategory": "white_noise",
+      "isLocked": true
+    },
+    "baby_washer": {
+      "name": "洗衣机",
+      "iconName": "washer.fill",
+      "category": "baby",
+      "subCategory": "white_noise",
+      "isLocked": false
+    },
+    "baby_car": {
+      "name": "汽车",
+      "iconName": "car.fill",
+      "category": "baby",
+      "subCategory": "white_noise",
+      "isLocked": true
+    },
+    "baby_stream": {
+      "name": "小溪",
+      "iconName": "drop.fill",
+      "category": "baby",
+      "subCategory": "nature",
+      "isLocked": false
+    },
+    "baby_birds": {
+      "name": "鸟鸣",
+      "iconName": "bird.fill",
+      "category": "baby",
+      "subCategory": "nature",
+      "isLocked": true
+    },
+    "baby_rain": {
+      "name": "雨声",
+      "iconName": "cloud.rain.fill",
+      "category": "baby",
+      "subCategory": "nature",
+      "isLocked": false
+    }
+  }
+}
