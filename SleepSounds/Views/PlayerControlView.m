@@ -45,8 +45,8 @@
     int minutes = (int)(remaining / 60);
     int seconds = (int)(remaining - minutes * 60);
     NSString *timeStr =
-        [NSString stringWithFormat:@"%02d分%02d秒", minutes, seconds];
-
+        [NSString stringWithFormat:@"%02d:%02d", minutes, seconds];
+      
     // 优化：仅在内容变化时更新，并禁用默认动画，防止闪烁
     if (![[self.timerButton titleForState:UIControlStateNormal]
             isEqualToString:timeStr]) {
@@ -56,7 +56,7 @@
           [self.timerButton setImage:nil forState:UIControlStateNormal];
         }
         self.timerButton.titleLabel.font =
-            [UIFont systemFontOfSize:12 weight:UIFontWeightMedium];
+            [UIFont systemFontOfSize:16 weight:UIFontWeightMedium];
         [self.timerButton layoutIfNeeded];
       }];
     }
@@ -105,7 +105,7 @@
   }];
 
   [divider mas_makeConstraints:^(MASConstraintMaker *make) {
-    make.width.mas_equalTo(1);
+    make.width.mas_equalTo(0.5);
     make.height.mas_equalTo(30);
   }];
 
