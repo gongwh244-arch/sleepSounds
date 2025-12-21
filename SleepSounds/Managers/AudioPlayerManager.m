@@ -30,6 +30,13 @@
     _activePlayers = [[NSMutableDictionary alloc]
         init]; // MRC: need to release in dealloc if this were not a singleton
     [self configureAudioSession];
+
+    // Load persisted last played sounds
+    NSArray *savedSounds = [[NSUserDefaults standardUserDefaults]
+        objectForKey:@"LastPlayedSoundNames"];
+    if (savedSounds) {
+      _lastPlayedSoundNames = savedSounds;
+    }
   }
   return self;
 }
@@ -86,6 +93,7 @@
         [NSMutableArray arrayWithArray:self.lastPlayedSoundNames ?: @[]];
     [temp addObject:soundName];
     self.lastPlayedSoundNames = [temp copy];
+    [self persistLastPlayedSounds];
   }
 }
 
@@ -100,11 +108,20 @@
 - (void)stopAllSounds {
   if (self.activePlayers.count > 0) {
     self.lastPlayedSoundNames = self.activePlayers.allKeys;
+    [self persistLastPlayedSounds];
   }
   for (NSString *name in self.activePlayers.allKeys) {
     [self stopSound:name];
   }
   [self cancelTimer];
+}
+
+- (void)persistLastPlayedSounds {
+  if (self.lastPlayedSoundNames) {
+    [[NSUserDefaults standardUserDefaults] setObject:self.lastPlayedSoundNames
+                                              forKey:@"LastPlayedSoundNames"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+  }
 }
 
 #pragma mark - Helper Properties
