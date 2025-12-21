@@ -259,7 +259,7 @@
       }
     }
   }
-  [[PlayerControlView sharedInstance] setIsPlaying:anyPlaying];
+//  [[PlayerControlView sharedInstance] setIsPlaying:anyPlaying];
 }
 
 - (void)handleTimerExpired {

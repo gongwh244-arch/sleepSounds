@@ -9,9 +9,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface PlayerControlView : UIView
 
-+ (instancetype)sharedInstance;
-+ (void)showGlobalControlBar;
-
 @property(nonatomic, weak) id<PlayerControlDelegate> delegate;
 @property(nonatomic, assign) BOOL isPlaying;
 

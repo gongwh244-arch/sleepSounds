@@ -9,28 +9,18 @@
 @property(nonatomic, strong) NSTimer *displayTimer;
 @end
 
-static UIWindow *g_playerControlWindow = nil;
-
 @implementation PlayerControlView
-
-+ (instancetype)sharedInstance {
-  static PlayerControlView *sharedInstance = nil;
-  static dispatch_once_t onceToken;
-  dispatch_once(&onceToken, ^{
-    sharedInstance = [[self alloc] initWithFrame:CGRectZero];
-  });
-  return sharedInstance;
-}
 
 - (instancetype)initWithFrame:(CGRect)frame {
   self = [super initWithFrame:frame];
   if (self) {
     [self setupUI];
     [self startDisplayTimer];
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(handleTimerExpired)
-                                                 name:@"AudioTimerExpired"
-                                               object:nil];
+    [[NSNotificationCenter defaultCenter]
+        addObserver:self
+           selector:@selector(handleTimerExpired)
+               name:@"AudioTimerExpired"
+             object:nil];
   }
   return self;
 }
@@ -54,8 +44,8 @@ static UIWindow *g_playerControlWindow = nil;
   if (remaining > 0) {
     int minutes = (int)(remaining / 60);
     int seconds = (int)(remaining - minutes * 60);
-    NSString *timeStr = [NSString
-        stringWithFormat:@"%02d分%02d秒", minutes, seconds];
+    NSString *timeStr =
+        [NSString stringWithFormat:@"%02d分%02d秒", minutes, seconds];
 
     // 优化：仅在内容变化时更新，并禁用默认动画，防止闪烁
     if (![[self.timerButton titleForState:UIControlStateNormal]
@@ -151,60 +141,4 @@ static UIWindow *g_playerControlWindow = nil;
   });
 }
 
-#pragma mark - Global Control
-
-+ (void)showGlobalControlBar {
-  static dispatch_once_t onceToken;
-  dispatch_once(&onceToken, ^{
-    g_playerControlWindow =
-        [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
-    g_playerControlWindow.windowLevel = UIWindowLevelAlert + 100;
-    g_playerControlWindow.backgroundColor = [UIColor clearColor];
-
-    // 创建一个简单的根视图控制器来承载控制条
-    UIViewController *rootVC = [[UIViewController alloc] init];
-    rootVC.view.backgroundColor = [UIColor clearColor];
-    g_playerControlWindow.rootViewController = rootVC;
-
-    PlayerControlView *playerControl = [PlayerControlView sharedInstance];
-    [rootVC.view addSubview:playerControl];
-
-    [playerControl mas_makeConstraints:^(MASConstraintMaker *make) {
-      make.centerX.equalTo(rootVC.view);
-      make.width.mas_equalTo(160); // 稍微加宽一点看上去更和谐
-      make.bottom.equalTo(rootVC.view.mas_bottom)
-          .offset(-20 - [UIDevice kd_tabBarFullHeight]);
-      make.height.mas_equalTo(60);
-    }];
-
-    g_playerControlWindow.hidden = NO;
-  });
-}
-
-// 触摸穿透处理：如果点击不在控制条内，则允许事件传递给底层的 window
-- (UIView *)hitTest:(CGPoint)point withEvent:(UIEvent *)event {
-  UIView *view = [super hitTest:point withEvent:event];
-  if (view == self) {
-    // 如果是点击了控制条内部的空隙, 也要拦截
-    return view;
-  }
-  // 子视图(按钮等)已经由 super 处理了
-  return view;
-}
-
-@end
-
-@implementation UIWindow (PlayerControlTouchThrough)
-// 扩展 UIWindow 处理，确保全局 Window 只拦截它想要拦截的区域
-- (UIView *)hitTest:(CGPoint)point withEvent:(UIEvent *)event {
-  if (self == g_playerControlWindow) {
-    PlayerControlView *playerControl = [PlayerControlView sharedInstance];
-    CGPoint pointInView = [playerControl convertPoint:point fromView:self];
-    if ([playerControl pointInside:pointInView withEvent:event]) {
-      return [super hitTest:point withEvent:event];
-    }
-    return nil; // 穿透
-  }
-  return [super hitTest:point withEvent:event];
-}
 @end

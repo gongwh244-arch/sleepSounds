@@ -16,7 +16,6 @@
 
   [self setupTabs];
   [self setupAppearance];
-  [self setupSharedPlayerControl];
 }
 
 - (void)setupAppearance {
@@ -123,44 +122,6 @@
 
   self.viewControllers = @[ sleepNav, settingsNav ];
   //  self.viewControllers = @[ sleepNav, babyNav, toolboxNav, settingsNav ];
-}
-
-- (void)setupSharedPlayerControl {
-  // 启用全局悬浮播放控制条
-  [PlayerControlView showGlobalControlBar];
-
-  // 设置委托
-  [PlayerControlView sharedInstance].delegate = self;
-}
-
-#pragma mark - PlayerControlDelegate
-
-- (void)didTapPlayPause {
-  // 获取当前选中的视图控制器
-  UIViewController *selectedVC = self.selectedViewController;
-  if ([selectedVC isKindOfClass:[UINavigationController class]]) {
-    UINavigationController *navVC = (UINavigationController *)selectedVC;
-    UIViewController *topVC = navVC.topViewController;
-
-    // 转发给当前视图控制器
-    if ([topVC conformsToProtocol:@protocol(PlayerControlDelegate)]) {
-      [(id<PlayerControlDelegate>)topVC didTapPlayPause];
-    }
-  }
-}
-
-- (void)didTapTimer {
-  // 获取当前选中的视图控制器
-  UIViewController *selectedVC = self.selectedViewController;
-  if ([selectedVC isKindOfClass:[UINavigationController class]]) {
-    UINavigationController *navVC = (UINavigationController *)selectedVC;
-    UIViewController *topVC = navVC.topViewController;
-
-    // 转发给当前视图控制器
-    if ([topVC conformsToProtocol:@protocol(PlayerControlDelegate)]) {
-      [(id<PlayerControlDelegate>)topVC didTapTimer];
-    }
-  }
 }
 
 @end

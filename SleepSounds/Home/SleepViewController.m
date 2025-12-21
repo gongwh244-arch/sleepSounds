@@ -13,6 +13,7 @@
 
 @property(nonatomic, strong) UICollectionView *collectionView;
 @property(nonatomic, strong) NSMutableArray<SoundItem *> *soundItems;
+@property(nonatomic, strong) PlayerControlView *playerControl;
 
 @end
 
@@ -32,6 +33,7 @@
 
   [self setupData];
   [self setupCollectionView];
+  [self setupPlayerControl];
 
   [[NSNotificationCenter defaultCenter] addObserver:self
                                            selector:@selector(vipStatusChanged)
@@ -106,6 +108,19 @@
   [self.view addSubview:self.collectionView];
 }
 
+- (void)setupPlayerControl {
+  self.playerControl = [[PlayerControlView alloc] initWithFrame:CGRectZero];
+  self.playerControl.delegate = self;
+  [self.view addSubview:self.playerControl];
+
+  [self.playerControl mas_makeConstraints:^(MASConstraintMaker *make) {
+    make.centerX.equalTo(self.view);
+    make.width.mas_equalTo(160);
+    make.bottom.equalTo(self.view.mas_safeAreaLayoutGuideBottom).offset(-20);
+    make.height.mas_equalTo(60);
+  }];
+}
+
 #pragma mark - UICollectionViewDataSource
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView
@@ -163,7 +178,7 @@
       break;
     }
   }
-  [[PlayerControlView sharedInstance] setIsPlaying:anyPlaying];
+  self.playerControl.isPlaying = anyPlaying;
 }
 
 - (void)handleTimerExpired {
@@ -220,10 +235,10 @@
 }
 
 - (void)didTapTimer {
-  UIAlertController *alert = [UIAlertController
-      alertControllerWithTitle:@"Set Sleep Timer"
-                       message:nil
-                preferredStyle:UIAlertControllerStyleAlert];
+  UIAlertController *alert =
+      [UIAlertController alertControllerWithTitle:@"Set Sleep Timer"
+                                          message:nil
+                                   preferredStyle:UIAlertControllerStyleAlert];
 
 #if DEBUG
   [alert addAction:[UIAlertAction
