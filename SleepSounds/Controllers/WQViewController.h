@@ -9,4 +9,6 @@
 
 @interface WQViewController : UIViewController
 
+- (void)showToast:(NSString *)message;
+
 @end

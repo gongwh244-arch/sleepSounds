@@ -31,14 +31,33 @@
 - (void)setupData {
   self.settingsItems = @[
     @[
-      @{@"title" : @"淡出时长", @"type" : @"disclosure"},
-      @{@"title" : @"更换背景色", @"type" : @"disclosure"},
-      @{@"title" : @"与其他 App 兼容播放", @"type" : @"switch"}
+      @{
+          @"title" : @"淡出时长",
+          @"type" : @"click"
+      },
+      @{
+          @"title" : @"更换背景色",
+          @"type" : @"click"
+      },
+      @{
+          @"title" : @"与其他 App 兼容播放",
+          @"type" : @"switch"
+      }
     ],
+    
     @[
-      @{@"title" : @"意见反馈", @"type" : @"disclosure"},
-      @{@"title" : @"去 AppStore 评分", @"type" : @"disclosure"},
-      @{@"title" : @"隐私协议", @"type" : @"disclosure"}
+      @{
+          @"title" : @"意见反馈",
+          @"type" : @"click"
+      },
+      @{
+          @"title" : @"去 AppStore 评分",
+          @"type" : @"click"
+      },
+      @{
+          @"title" : @"隐私协议",
+          @"type" : @"click"
+      }
     ]
   ];
 }
@@ -165,6 +184,41 @@
 - (void)tableView:(UITableView *)tableView
     didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
   [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    
+    NSDictionary *item = self.settingsItems[indexPath.section][indexPath.row];
+    if ([item[@"title"] isEqualToString:@"意见反馈"]) {
+        [self clickFeedback];
+    }
+}
+
+#pragma mark - Action
+- (void)clickFeedback{
+    
+    
+    UIAlertController *alert =
+        [UIAlertController alertControllerWithTitle:@"意见反馈"
+                                            message:nil
+                                     preferredStyle:UIAlertControllerStyleActionSheet];
+    [alert addAction:[UIAlertAction
+                         actionWithTitle:@"给1066802504@qq.com发邮件"
+                                   style:UIAlertActionStyleDefault
+                                 handler:^(UIAlertAction *_Nonnull action) {
+        NSURL *url = [NSURL URLWithString:@"mailto:1066802504@qq.com?subject=Feedback"];
+        if ([[UIApplication sharedApplication] canOpenURL:url]) {
+            [[UIApplication sharedApplication] openURL:url options:@{} completionHandler:nil];
+        }
+    }]];
+    [alert addAction:[UIAlertAction
+                         actionWithTitle:@"复制1066802504@qq.com"
+                                   style:UIAlertActionStyleDefault
+                                 handler:^(UIAlertAction *_Nonnull action) {
+        [UIPasteboard generalPasteboard].string = @"1066802504@qq.com";
+        [self showToast:@"已复制到剪贴板"];
+    }]];
+    [alert addAction:[UIAlertAction actionWithTitle:@"Close"
+                                              style:UIAlertActionStyleCancel
+                                            handler:nil]];
+    [self presentViewController:alert animated:YES completion:nil];
 }
 
 @end
