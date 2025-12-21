@@ -1,5 +1,11 @@
 #import "SettingsViewController.h"
 #import "Masonry.h"
+#import <SafariServices/SafariServices.h>
+
+#define YHYSZC  @"用户隐私政策"
+#define YHFWXY  @"用户服务协议"
+#define YJFK   @"意见反馈"
+#define APPSTORE_Rate    @"去 AppStore 评分"
 
 @interface SettingsViewController () <UITableViewDelegate,
 									  UITableViewDataSource>
@@ -36,9 +42,10 @@
 		],
 
 		@[
-			@{@"title" : @"意见反馈", @"type" : @"click"},
-			@{@"title" : @"去 AppStore 评分", @"type" : @"click"},
-			@{@"title" : @"隐私协议", @"type" : @"click"}
+			@{@"title" : YJFK, @"type" : @"click"},
+			@{@"title" : APPSTORE_Rate, @"type" : @"click"},
+			@{@"title" : YHYSZC, @"type" : @"click"},
+            @{@"title" : YHFWXY, @"type" : @"click"}
 		]
 	];
 }
@@ -169,14 +176,25 @@
 	NSDictionary *item = self.settingsItems[indexPath.section][indexPath.row];
 	NSString *title = item[@"title"];
 
-	if ([title isEqualToString:@"意见反馈"]) {
+	if ([title isEqualToString:YJFK]) {
 		[self clickFeedback];
-	} else if ([title isEqualToString:@"去 AppStore 评分"]) {
+	} else if ([title isEqualToString:APPSTORE_Rate]) {
 		[self rateApp];
-	}
+    } else if ([title isEqualToString:YHYSZC]) {
+        [self openPrivacyPolicy:WQPrivacyPolicyLink];
+    } else if ([title isEqualToString:YHFWXY]) {
+        [self openPrivacyPolicy:WQUserServerLink];
+    }
 }
 
 #pragma mark - Action
+- (void)openPrivacyPolicy:(NSString *)urlString {
+    NSURL *url = [NSURL URLWithString:urlString];
+    if (url) {
+        SFSafariViewController *safariVC = [[SFSafariViewController alloc] initWithURL:url];
+        [self presentViewController:safariVC animated:YES completion:nil];
+    }
+}
 - (void)clickFeedback {
 	UIAlertController *alert = [UIAlertController
 		alertControllerWithTitle:@"意见反馈"
