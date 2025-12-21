@@ -12,34 +12,28 @@
 #define ScreenWidth UIScreen.mainScreen.bounds.size.width
 #define ScreenHeight UIScreen.mainScreen.bounds.size.height
 
-//单利---begin
-#define KD_SINGLETION(...)                                          \
-+ (instancetype)sharedInstance NS_SWIFT_NAME(shared());
+// 单利---begin
+#define KD_SINGLETION(...) \
+	+(instancetype)sharedInstance NS_SWIFT_NAME(shared());
 
-#define KD_DEF_SINGLETION(...)                                      \
-+ (instancetype)sharedInstance                                      \
-{                                                                   \
-static dispatch_once_t once;                                        \
-static id __singletion;                                             \
-dispatch_once(&once,^{__singletion = [[self alloc] init];});        \
-return __singletion;                                                \
-}                                                                   \
-                                                                    \
-- (id)copyWithZone:(nullable NSZone *)zone {                        \
-    return [[self class] sharedInstance];                           \
-}                                                                   \
-                                                                    \
-- (id)mutableCopyWithZone:(nullable NSZone *)zone {                 \
-    return [[self class] sharedInstance];                           \
-}
-//单利---end
-
-/**  子vc底部拍照按钮通知name */
-#define ReSearchForTakePhotoAgain     @"kReSearchForTakePhotoAgain"    //再拍一题
-#define ReSearchForPhotoSelection     @"kReSearchForPhotoSelection"    //补搜单题/框选单题
-
-#define BeginPanGestureNotification  @"BeginPanGestureNotification"  //开始响应滑动手势
-
+#define KD_DEF_SINGLETION(...)                           \
+	+(instancetype)sharedInstance {                      \
+		static dispatch_once_t once;                     \
+		static id __singletion;                          \
+		dispatch_once(&once, ^{                          \
+			__singletion = [[self alloc] init];          \
+		});                                              \
+		return __singletion;                             \
+	}                                                    \
+                                                         \
+	-(id)copyWithZone : (nullable NSZone *)zone {        \
+		return [[self class] sharedInstance];            \
+	}                                                    \
+                                                         \
+	-(id)mutableCopyWithZone : (nullable NSZone *)zone { \
+		return [[self class] sharedInstance];            \
+	}
+// 单利---end
 
 
 

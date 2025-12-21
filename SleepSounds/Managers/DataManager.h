@@ -8,8 +8,8 @@ NS_ASSUME_NONNULL_BEGIN
 + (instancetype)sharedManager;
 
 - (void)fetchSoundsForCategory:(NSString *)category
-                    completion:(void (^)(NSArray<SoundItem *> *items,
-                                         NSError *_Nullable error))completion;
+					completion:(void (^)(NSArray<SoundItem *> *items,
+										 NSError *_Nullable error))completion;
 
 @end
 

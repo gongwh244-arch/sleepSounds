@@ -25,7 +25,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (NSTimeInterval)remainingTime;
 
 @property(nonatomic, strong, readonly)
-    NSArray<NSString *> *lastPlayedSoundNames;
+	NSArray<NSString *> *lastPlayedSoundNames;
 
 @end
 

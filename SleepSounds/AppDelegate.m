@@ -16,16 +16,16 @@
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application
-    didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-//  [FIRApp configure];
-  self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
-  self.window.backgroundColor = [UIColor whiteColor];
+	didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+	//  [FIRApp configure];
+	self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
+	self.window.backgroundColor = [UIColor whiteColor];
 
-  MainTabBarController *tabVC = [[MainTabBarController alloc] init];
-  self.window.rootViewController = tabVC;
+	MainTabBarController *tabVC = [[MainTabBarController alloc] init];
+	self.window.rootViewController = tabVC;
 
-  [self.window makeKeyAndVisible];
-  return YES;
+	[self.window makeKeyAndVisible];
+	return YES;
 }
 
 @end

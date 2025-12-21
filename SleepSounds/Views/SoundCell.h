@@ -11,8 +11,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic, assign) BOOL isPlaying;
 
 - (void)configureWithIcon:(NSString *)iconName
-                     name:(NSString *)name
-                 isLocked:(BOOL)isLocked;
+					 name:(NSString *)name
+				 isLocked:(BOOL)isLocked;
 
 @end
 
