@@ -89,14 +89,33 @@
   _timerButton = [self createButtonWithImage:@"timer"
                                       action:@selector(timerTapped)];
 
+  // Divider Line
+  UIView *divider = [[UIView alloc] init];
+  divider.backgroundColor = [UIColor colorWithWhite:1.0 alpha:0.3];
+
   // Stack View
   UIStackView *stack = [[UIStackView alloc]
-      initWithArrangedSubviews:@[ _playPauseButton, _timerButton ]];
+      initWithArrangedSubviews:@[ _playPauseButton, divider, _timerButton ]];
   stack.axis = UILayoutConstraintAxisHorizontal;
-  stack.distribution = UIStackViewDistributionFillEqually;
+  stack.alignment = UIStackViewAlignmentCenter;
   [self addSubview:stack];
+
   [stack mas_makeConstraints:^(MASConstraintMaker *make) {
     make.edges.equalTo(self);
+  }];
+
+  [divider mas_makeConstraints:^(MASConstraintMaker *make) {
+    make.width.mas_equalTo(1);
+    make.height.mas_equalTo(30);
+  }];
+
+  [_playPauseButton mas_makeConstraints:^(MASConstraintMaker *make) {
+    make.height.equalTo(stack);
+  }];
+
+  [_timerButton mas_makeConstraints:^(MASConstraintMaker *make) {
+    make.height.equalTo(stack);
+    make.width.equalTo(_playPauseButton);
   }];
 }
 
