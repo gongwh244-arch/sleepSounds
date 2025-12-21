@@ -43,9 +43,27 @@
 
 - (void)configureAudioSession {
   NSError *error = nil;
-  [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayback
-                                         error:&error];
-  [[AVAudioSession sharedInstance] setActive:YES error:&error];
+  AVAudioSession *session = [AVAudioSession sharedInstance];
+  [session setCategory:AVAudioSessionCategoryPlayback error:&error];
+  if (error) {
+    NSLog(@"[AudioPlayerManager] Error setting category: %@", error);
+  }
+}
+
+- (void)activateAudioSession:(BOOL)active {
+  NSError *error = nil;
+  if (active) {
+    [[AVAudioSession sharedInstance] setActive:YES error:&error];
+  } else {
+    [[AVAudioSession sharedInstance]
+          setActive:NO
+        withOptions:AVAudioSessionSetActiveOptionNotifyOthersOnDeactivation
+              error:&error];
+  }
+  if (error) {
+    NSLog(@"[AudioPlayerManager] Error changing session active to %d: %@",
+          active, error);
+  }
 }
 
 #pragma mark - Playback Methods
@@ -74,6 +92,11 @@
   }
 
   [self stopSound:soundName];
+
+  // 播放前激活 AudioSession，并中断其他 App
+  if (self.activePlayers.count == 0) {
+    [self activateAudioSession:YES];
+  }
 
   NSError *error = nil;
   AVAudioPlayer *player = [[AVAudioPlayer alloc] initWithContentsOfURL:url
@@ -114,6 +137,9 @@
     [self stopSound:name];
   }
   [self cancelTimer];
+
+  // 停止所有声音后，通知系统释放资源，以便其他 App 恢复播放
+  [self activateAudioSession:NO];
 }
 
 - (void)persistLastPlayedSounds {
