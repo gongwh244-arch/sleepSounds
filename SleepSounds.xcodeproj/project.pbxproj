@@ -40,6 +40,7 @@
 		1EC1185C2EF8ED370064167C /* VIPViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1EC1185B2EF8ED370064167C /* VIPViewController.m */; };
 		1EC1185F2EF8ED460064167C /* SSStoreManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 1EC1185E2EF8ED460064167C /* SSStoreManager.m */; };
 		1EC118622EF8F0010064167C /* AboutUsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1EC118612EF8F0010064167C /* AboutUsViewController.m */; };
+		1EC118622EF934450064167C /* DigitalClockViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1EC118612EF934450064167C /* DigitalClockViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -98,7 +99,9 @@
 		1EC1185D2EF8ED460064167C /* SSStoreManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SSStoreManager.h; sourceTree = "<group>"; };
 		1EC1185E2EF8ED460064167C /* SSStoreManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SSStoreManager.m; sourceTree = "<group>"; };
 		1EC118602EF8F0010064167C /* AboutUsViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AboutUsViewController.h; sourceTree = "<group>"; };
+		1EC118602EF934450064167C /* DigitalClockViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DigitalClockViewController.h; sourceTree = "<group>"; };
 		1EC118612EF8F0010064167C /* AboutUsViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AboutUsViewController.m; sourceTree = "<group>"; };
+		1EC118612EF934450064167C /* DigitalClockViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DigitalClockViewController.m; sourceTree = "<group>"; };
 		3BB2B6725CFD6037EED7D838 /* Pods-SleepSounds.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SleepSounds.debug.xcconfig"; path = "Target Support Files/Pods-SleepSounds/Pods-SleepSounds.debug.xcconfig"; sourceTree = "<group>"; };
 		7CE7CE26FD7BCF8E68776A16 /* Pods-SleepSounds.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SleepSounds.release.xcconfig"; path = "Target Support Files/Pods-SleepSounds/Pods-SleepSounds.release.xcconfig"; sourceTree = "<group>"; };
 		C3B164A6CB0212ABEE15AAAF /* Pods_SleepSounds.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SleepSounds.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -146,6 +149,8 @@
 		1EC118082EF540D30064167C /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				1EC118602EF934450064167C /* DigitalClockViewController.h */,
+				1EC118612EF934450064167C /* DigitalClockViewController.m */,
 				1EC1185A2EF8ED370064167C /* VIPViewController.h */,
 				1EC1185B2EF8ED370064167C /* VIPViewController.m */,
 				1EC118602EF8F0010064167C /* AboutUsViewController.h */,
@@ -403,6 +408,7 @@
 				1EC118252EF540D30064167C /* MainTabBarController.m in Sources */,
 				1EC118262EF540D30064167C /* MixerViewController.m in Sources */,
 				1EC118272EF540D30064167C /* ScreenLightViewController.m in Sources */,
+				1EC118622EF934450064167C /* DigitalClockViewController.m in Sources */,
 				1EC1185F2EF8ED460064167C /* SSStoreManager.m in Sources */,
 				1EC118282EF540D30064167C /* SettingsViewController.m in Sources */,
 				1EC118292EF540D30064167C /* SleepViewController.m in Sources */,

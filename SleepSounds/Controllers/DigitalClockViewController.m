@@ -1,0 +1,322 @@
+#import "DigitalClockViewController.h"
+#import "Masonry.h"
+
+@interface DigitalClockViewController ()
+
+@property(nonatomic, strong) UIView *containerView; // Rotated container
+@property(nonatomic, strong) UILabel *hourLabel;
+@property(nonatomic, strong) UILabel *minuteLabel;
+@property(nonatomic, strong) UILabel *secondLabel;
+@property(nonatomic, strong) UILabel *amPmLabel;
+@property(nonatomic, strong) UILabel *dateLabel;
+@property(nonatomic, strong) UILabel *dayLabel;
+@property(nonatomic, strong) UIView *batteryView;
+@property(nonatomic, strong) UILabel *batteryLevelLabel;
+@property(nonatomic, strong) NSTimer *timer;
+
+@property(nonatomic, strong) UIView *hourBox;
+@property(nonatomic, strong) UIView *minuteBox;
+@property(nonatomic, strong) UIView *secondBox;
+
+@end
+
+@implementation DigitalClockViewController
+
+- (void)viewDidLoad {
+  [super viewDidLoad];
+  self.view.backgroundColor = [UIColor blackColor];
+  [self setupUI];
+  [self startTimer];
+  [self updateTime];
+
+  [UIDevice currentDevice].batteryMonitoringEnabled = YES;
+  [[NSNotificationCenter defaultCenter]
+      addObserver:self
+         selector:@selector(updateBattery)
+             name:UIDeviceBatteryLevelDidChangeNotification
+           object:nil];
+  [[NSNotificationCenter defaultCenter]
+      addObserver:self
+         selector:@selector(updateBattery)
+             name:UIDeviceBatteryStateDidChangeNotification
+           object:nil];
+  [self updateBattery];
+}
+
+- (void)dealloc {
+  [_timer invalidate];
+  _timer = nil;
+  [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+// Keep it Portrait to match Info.plist and avoid crash
+- (UIInterfaceOrientationMask)supportedInterfaceOrientations {
+  return UIInterfaceOrientationMaskPortrait;
+}
+
+- (BOOL)prefersStatusBarHidden {
+  return YES;
+}
+
+- (void)setupUI {
+  // Create a container that we will rotate to simulate landscape
+  self.containerView = [[UIView alloc] init];
+  [self.view addSubview:self.containerView];
+
+  // Rotate 90 degrees and match the screen bounds (swapping width/height)
+  CGFloat width = [UIScreen mainScreen].bounds.size.width;
+  CGFloat height = [UIScreen mainScreen].bounds.size.height;
+
+  [self.containerView mas_makeConstraints:^(MASConstraintMaker *make) {
+    make.center.equalTo(self.view);
+    make.width.mas_equalTo(height);
+    make.height.mas_equalTo(width);
+  }];
+
+  self.containerView.transform = CGAffineTransformMakeRotation(M_PI_2);
+
+  // All subviews added to containerView from now on
+
+  // Close Button (Top Left in landscape view)
+  UIButton *closeBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+  [closeBtn setImage:[UIImage systemImageNamed:@"xmark"]
+            forState:UIControlStateNormal];
+  [closeBtn setTintColor:[UIColor whiteColor]];
+  [closeBtn addTarget:self
+                action:@selector(closeAction)
+      forControlEvents:UIControlEventTouchUpInside];
+  [self.containerView addSubview:closeBtn];
+  [closeBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+    make.top.equalTo(self.containerView).offset(20);
+    make.left.equalTo(self.containerView).offset(40);
+    make.width.height.mas_equalTo(44);
+  }];
+
+  // Rotate Button (Visual Parity)
+  UIButton *rotateBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+  [rotateBtn setImage:[UIImage systemImageNamed:@"arrow.triangle.2.circlepath"]
+             forState:UIControlStateNormal];
+  [rotateBtn setTintColor:[UIColor whiteColor]];
+  [self.containerView addSubview:rotateBtn];
+  [rotateBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+    make.centerY.equalTo(closeBtn);
+    make.left.equalTo(closeBtn.mas_right).offset(20);
+    make.width.height.mas_equalTo(44);
+  }];
+
+  // Battery Indicator (Top Center)
+  self.batteryView = [[UIView alloc] init];
+  self.batteryView.layer.borderColor = [UIColor grayColor].CGColor;
+  self.batteryView.layer.borderWidth = 1;
+  self.batteryView.layer.cornerRadius = 2;
+  [self.containerView addSubview:self.batteryView];
+  [self.batteryView mas_makeConstraints:^(MASConstraintMaker *make) {
+    make.top.equalTo(self.containerView).offset(25);
+    make.centerX.equalTo(self.containerView);
+    make.width.mas_equalTo(50);
+    make.height.mas_equalTo(22);
+  }];
+
+  UIView *batteryNub = [[UIView alloc] init];
+  batteryNub.backgroundColor = [UIColor grayColor];
+  [self.containerView addSubview:batteryNub];
+  [batteryNub mas_makeConstraints:^(MASConstraintMaker *make) {
+    make.centerY.equalTo(self.batteryView);
+    make.left.equalTo(self.batteryView.mas_right);
+    make.width.mas_equalTo(3);
+    make.height.mas_equalTo(8);
+  }];
+
+  self.batteryLevelLabel = [[UILabel alloc] init];
+  self.batteryLevelLabel.textColor = [UIColor whiteColor];
+  self.batteryLevelLabel.font = [UIFont systemFontOfSize:10
+                                                  weight:UIFontWeightBold];
+  self.batteryLevelLabel.textAlignment = NSTextAlignmentCenter;
+  [self.batteryView addSubview:self.batteryLevelLabel];
+  [self.batteryLevelLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+    make.edges.equalTo(self.batteryView);
+  }];
+
+  // Menu Button (Top Right)
+  UIButton *menuBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+  [menuBtn setImage:[UIImage systemImageNamed:@"line.3.horizontal"]
+           forState:UIControlStateNormal];
+  [menuBtn setTintColor:[UIColor whiteColor]];
+  [self.containerView addSubview:menuBtn];
+  [menuBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+    make.top.equalTo(self.containerView).offset(20);
+    make.right.equalTo(self.containerView).offset(-40);
+    make.width.height.mas_equalTo(44);
+  }];
+
+  // Clock Container
+  UIStackView *clockStack = [[UIStackView alloc] init];
+  clockStack.axis = UILayoutConstraintAxisHorizontal;
+  clockStack.spacing = 15;
+  clockStack.distribution = UIStackViewDistributionFillEqually;
+  [self.containerView addSubview:clockStack];
+  [clockStack mas_makeConstraints:^(MASConstraintMaker *make) {
+    make.center.equalTo(self.containerView).centerOffset(CGPointMake(0, -10));
+    make.width.equalTo(self.containerView).multipliedBy(0.85);
+    make.height.equalTo(self.containerView).multipliedBy(0.55);
+  }];
+
+  self.hourBox = [self createTimeBox];
+  self.minuteBox = [self createTimeBox];
+  self.secondBox = [self createTimeBox];
+
+  [clockStack addArrangedSubview:self.hourBox];
+  [clockStack addArrangedSubview:self.minuteBox];
+  [clockStack addArrangedSubview:self.secondBox];
+
+  // AM/PM Label inside hour box
+  self.amPmLabel = [[UILabel alloc] init];
+  self.amPmLabel.textColor = [UIColor darkGrayColor];
+  self.amPmLabel.font = [UIFont boldSystemFontOfSize:14];
+  [self.hourBox addSubview:self.amPmLabel];
+  [self.amPmLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+    make.top.equalTo(self.hourBox).offset(10);
+    make.left.equalTo(self.hourBox).offset(10);
+  }];
+
+  self.hourLabel = [self createLargeTimeLabelInView:self.hourBox];
+  self.minuteLabel = [self createLargeTimeLabelInView:self.minuteBox];
+  self.secondLabel = [self createLargeTimeLabelInView:self.secondBox];
+
+  // Bottom bar (Date and Day)
+  UIView *bottomBarContainer = [[UIView alloc] init];
+  [self.containerView addSubview:bottomBarContainer];
+  [bottomBarContainer mas_makeConstraints:^(MASConstraintMaker *make) {
+    make.top.equalTo(clockStack.mas_bottom).offset(20);
+    make.left.right.equalTo(clockStack);
+    make.height.mas_equalTo(40);
+  }];
+
+  UIView *line = [[UIView alloc] init];
+  line.backgroundColor = [UIColor colorWithWhite:1.0 alpha:0.3];
+  [bottomBarContainer addSubview:line];
+  [line mas_makeConstraints:^(MASConstraintMaker *make) {
+    make.top.equalTo(bottomBarContainer);
+    make.left.right.equalTo(bottomBarContainer);
+    make.height.mas_equalTo(1);
+  }];
+
+  self.dayLabel = [[UILabel alloc] init];
+  self.dayLabel.backgroundColor = [UIColor colorWithWhite:0.6 alpha:1.0];
+  self.dayLabel.textColor = [UIColor blackColor];
+  self.dayLabel.font = [UIFont boldSystemFontOfSize:16];
+  self.dayLabel.textAlignment = NSTextAlignmentCenter;
+  self.dayLabel.layer.cornerRadius = 4;
+  self.dayLabel.layer.masksToBounds = YES;
+  [bottomBarContainer addSubview:self.dayLabel];
+  [self.dayLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+    make.top.equalTo(line.mas_bottom).offset(8);
+    make.left.equalTo(bottomBarContainer);
+    make.width.mas_equalTo(70);
+    make.height.mas_equalTo(24);
+  }];
+
+  self.dateLabel = [[UILabel alloc] init];
+  self.dateLabel.textColor = [UIColor colorWithWhite:0.8 alpha:1.0];
+  self.dateLabel.font = [UIFont boldSystemFontOfSize:16];
+  self.dateLabel.textAlignment = NSTextAlignmentRight;
+  [bottomBarContainer addSubview:self.dateLabel];
+  [self.dateLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+    make.centerY.equalTo(self.dayLabel);
+    make.right.equalTo(bottomBarContainer);
+  }];
+}
+
+- (UIView *)createTimeBox {
+  UIView *box = [[UIView alloc] init];
+  box.backgroundColor = [UIColor colorWithRed:0.08
+                                        green:0.08
+                                         blue:0.08
+                                        alpha:1.0];
+  box.layer.cornerRadius = 15;
+  box.layer.masksToBounds = YES;
+
+  UIView *splitLine = [[UIView alloc] init];
+  splitLine.backgroundColor = [UIColor blackColor];
+  [box addSubview:splitLine];
+  [splitLine mas_makeConstraints:^(MASConstraintMaker *make) {
+    make.centerY.equalTo(box);
+    make.left.right.equalTo(box);
+    make.height.mas_equalTo(2);
+  }];
+
+  return box;
+}
+
+- (UILabel *)createLargeTimeLabelInView:(UIView *)parent {
+  UILabel *label = [[UILabel alloc] init];
+  label.textColor = [UIColor colorWithWhite:0.7 alpha:1.0];
+  label.font = [UIFont systemFontOfSize:120 weight:UIFontWeightBold];
+  label.textAlignment = NSTextAlignmentCenter;
+  label.adjustsFontSizeToFitWidth = YES;
+  [parent addSubview:label];
+  [label mas_makeConstraints:^(MASConstraintMaker *make) {
+    make.center.equalTo(parent);
+    make.width.equalTo(parent).multipliedBy(0.9);
+  }];
+  return label;
+}
+
+- (void)startTimer {
+  self.timer = [NSTimer scheduledTimerWithTimeInterval:1.0
+                                                target:self
+                                              selector:@selector(updateTime)
+                                              userInfo:nil
+                                               repeats:YES];
+}
+
+- (void)updateTime {
+  NSDate *now = [NSDate date];
+  NSCalendar *calendar = [NSCalendar currentCalendar];
+  NSDateComponents *components = [calendar
+      components:NSCalendarUnitHour | NSCalendarUnitMinute |
+                 NSCalendarUnitSecond | NSCalendarUnitWeekday |
+                 NSCalendarUnitDay | NSCalendarUnitMonth | NSCalendarUnitYear
+        fromDate:now];
+
+  NSInteger hour = components.hour;
+  NSString *amPm = @"AM";
+  if (hour >= 12) {
+    amPm = @"PM";
+    if (hour > 12)
+      hour -= 12;
+  } else if (hour == 0) {
+    hour = 12;
+  }
+
+  self.hourLabel.text = [NSString stringWithFormat:@"%02ld", (long)hour];
+  self.minuteLabel.text =
+      [NSString stringWithFormat:@"%02ld", (long)components.minute];
+  self.secondLabel.text =
+      [NSString stringWithFormat:@"%02ld", (long)components.second];
+  self.amPmLabel.text = amPm;
+
+  NSArray *weekdays =
+      @[ @"", @"周日", @"周一", @"周二", @"周三", @"周四", @"周五", @"周六" ];
+  self.dayLabel.text = weekdays[components.weekday];
+
+  self.dateLabel.text =
+      [NSString stringWithFormat:@"%ld月%ld日 %ld", (long)components.month,
+                                 (long)components.day, (long)components.year];
+}
+
+- (void)updateBattery {
+  float level = [UIDevice currentDevice].batteryLevel;
+  if (level < 0) {
+    self.batteryLevelLabel.text = @"100%";
+  } else {
+    self.batteryLevelLabel.text =
+        [NSString stringWithFormat:@"%d%%", (int)(level * 100)];
+  }
+}
+
+- (void)closeAction {
+  [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+@end

@@ -103,13 +103,13 @@
 	//                tag:1];
 
 	// 3. Toolbox
-	//  ToolboxViewController *toolboxVC = [[ToolboxViewController alloc] init];
-	//  UINavigationController *toolboxNav =
-	//      [[UINavigationController alloc] initWithRootViewController:toolboxVC];
-	//  toolboxNav.tabBarItem = [[UITabBarItem alloc]
-	//      initWithTitle:@"工具箱"
-	//              image:[UIImage systemImageNamed:@"briefcase.fill"]
-	//                tag:2];
+	  ToolboxViewController *toolboxVC = [[ToolboxViewController alloc] init];
+	  UINavigationController *toolboxNav =
+	      [[UINavigationController alloc] initWithRootViewController:toolboxVC];
+	  toolboxNav.tabBarItem = [[UITabBarItem alloc]
+	      initWithTitle:@"工具箱"
+	              image:[UIImage systemImageNamed:@"briefcase.fill"]
+	                tag:2];
 
 	// 4. Settings
 	SettingsViewController *settingsVC = [[SettingsViewController alloc] init];
@@ -120,7 +120,7 @@
 				image:[UIImage systemImageNamed:@"gearshape.fill"]
 				  tag:3];
 
-	self.viewControllers = @[ sleepNav, settingsNav ];
+	self.viewControllers = @[ sleepNav, toolboxNav,settingsNav ];
 	//  self.viewControllers = @[ sleepNav, babyNav, toolboxNav, settingsNav ];
 }
 
