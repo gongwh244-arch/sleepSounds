@@ -18,6 +18,10 @@
 @property(nonatomic, strong) UIView *minuteBox;
 @property(nonatomic, strong) UIView *secondBox;
 @property(nonatomic, strong) UIButton *closeBtn;
+@property(nonatomic, strong) UILabel *colonLabel1;
+@property(nonatomic, strong) UILabel *colonLabel2;
+@property(nonatomic, strong) UIImageView *chargingIcon;
+@property(nonatomic, strong) UIView *batteryNub;
 
 @end
 
@@ -62,6 +66,10 @@
 }
 
 - (BOOL)prefersStatusBarHidden {
+  return YES;
+}
+
+- (BOOL)prefersHomeIndicatorAutoHidden {
   return YES;
 }
 
@@ -113,10 +121,10 @@
     make.height.mas_equalTo(22);
   }];
 
-  UIView *batteryNub = [[UIView alloc] init];
-  batteryNub.backgroundColor = [UIColor grayColor];
-  [self.containerView addSubview:batteryNub];
-  [batteryNub mas_makeConstraints:^(MASConstraintMaker *make) {
+  self.batteryNub = [[UIView alloc] init];
+  self.batteryNub.backgroundColor = [UIColor grayColor];
+  [self.containerView addSubview:self.batteryNub];
+  [self.batteryNub mas_makeConstraints:^(MASConstraintMaker *make) {
     make.centerY.equalTo(self.batteryView);
     make.left.equalTo(self.batteryView.mas_right);
     make.width.mas_equalTo(3);
@@ -133,25 +141,60 @@
     make.edges.equalTo(self.batteryView);
   }];
 
+  self.chargingIcon = [[UIImageView alloc]
+      initWithImage:[UIImage systemImageNamed:@"bolt.fill"]];
+  self.chargingIcon.tintColor = [UIColor colorWithRed:0.2
+                                                green:0.9
+                                                 blue:0.2
+                                                alpha:1.0]; // Greenish
+  self.chargingIcon.contentMode = UIViewContentModeScaleAspectFit;
+  self.chargingIcon.hidden = YES;
+  [self.containerView addSubview:self.chargingIcon];
+  [self.chargingIcon mas_makeConstraints:^(MASConstraintMaker *make) {
+    make.centerY.equalTo(self.batteryView);
+    make.right.equalTo(self.batteryView.mas_left).offset(-5);
+    make.width.height.mas_equalTo(16);
+  }];
+
   // Clock Container
   UIStackView *clockStack = [[UIStackView alloc] init];
   clockStack.axis = UILayoutConstraintAxisHorizontal;
-  clockStack.spacing = 15;
-  clockStack.distribution = UIStackViewDistributionFillEqually;
+  clockStack.spacing = 10;
+  clockStack.distribution = UIStackViewDistributionFill;
+  clockStack.alignment = UIStackViewAlignmentFill;
   [self.containerView addSubview:clockStack];
   [clockStack mas_makeConstraints:^(MASConstraintMaker *make) {
-    make.center.equalTo(self.containerView).centerOffset(CGPointMake(0, -10));
-    make.width.equalTo(self.containerView).multipliedBy(0.85);
-    make.height.equalTo(self.containerView).multipliedBy(0.55);
+    make.center.equalTo(self.containerView).centerOffset(CGPointMake(0, -20));
+    make.width.equalTo(self.containerView).multipliedBy(0.75);
+    make.height.equalTo(self.containerView).multipliedBy(0.45);
   }];
 
   self.hourBox = [self createTimeBox];
   self.minuteBox = [self createTimeBox];
   self.secondBox = [self createTimeBox];
 
+  self.colonLabel1 = [self createColonLabel];
+  self.colonLabel2 = [self createColonLabel];
+
   [clockStack addArrangedSubview:self.hourBox];
+  [clockStack addArrangedSubview:self.colonLabel1];
   [clockStack addArrangedSubview:self.minuteBox];
+  [clockStack addArrangedSubview:self.colonLabel2];
   [clockStack addArrangedSubview:self.secondBox];
+
+  // Weights for boxes (1:0:1:0:1 ratio essentially)
+  [self.hourBox mas_makeConstraints:^(MASConstraintMaker *make) {
+    make.width.equalTo(self.minuteBox);
+  }];
+  [self.secondBox mas_makeConstraints:^(MASConstraintMaker *make) {
+    make.width.equalTo(self.minuteBox);
+  }];
+  [self.colonLabel1 mas_makeConstraints:^(MASConstraintMaker *make) {
+    make.width.mas_equalTo(20);
+  }];
+  [self.colonLabel2 mas_makeConstraints:^(MASConstraintMaker *make) {
+    make.width.mas_equalTo(20);
+  }];
 
   // AM/PM Label inside hour box
   self.amPmLabel = [[UILabel alloc] init];
@@ -171,9 +214,9 @@
   UIView *bottomBarContainer = [[UIView alloc] init];
   [self.containerView addSubview:bottomBarContainer];
   [bottomBarContainer mas_makeConstraints:^(MASConstraintMaker *make) {
-    make.top.equalTo(clockStack.mas_bottom).offset(20);
+    make.top.equalTo(clockStack.mas_bottom).offset(30);
     make.left.right.equalTo(clockStack);
-    make.height.mas_equalTo(40);
+    make.height.mas_equalTo(60);
   }];
 
   UIView *line = [[UIView alloc] init];
@@ -188,21 +231,21 @@
   self.dayLabel = [[UILabel alloc] init];
   self.dayLabel.backgroundColor = [UIColor colorWithWhite:0.6 alpha:1.0];
   self.dayLabel.textColor = [UIColor blackColor];
-  self.dayLabel.font = [UIFont boldSystemFontOfSize:16];
+  self.dayLabel.font = [UIFont boldSystemFontOfSize:22];
   self.dayLabel.textAlignment = NSTextAlignmentCenter;
   self.dayLabel.layer.cornerRadius = 4;
   self.dayLabel.layer.masksToBounds = YES;
   [bottomBarContainer addSubview:self.dayLabel];
   [self.dayLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-    make.top.equalTo(line.mas_bottom).offset(8);
+    make.top.equalTo(line.mas_bottom).offset(12);
     make.left.equalTo(bottomBarContainer);
-    make.width.mas_equalTo(70);
-    make.height.mas_equalTo(24);
+    make.width.mas_equalTo(100);
+    make.height.mas_equalTo(34);
   }];
 
   self.dateLabel = [[UILabel alloc] init];
   self.dateLabel.textColor = [UIColor colorWithWhite:0.8 alpha:1.0];
-  self.dateLabel.font = [UIFont boldSystemFontOfSize:16];
+  self.dateLabel.font = [UIFont boldSystemFontOfSize:22];
   self.dateLabel.textAlignment = NSTextAlignmentRight;
   [bottomBarContainer addSubview:self.dateLabel];
   [self.dateLabel mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -235,16 +278,27 @@
 - (UILabel *)createLargeTimeLabelInView:(UIView *)parent {
   UILabel *label = [[UILabel alloc] init];
   label.textColor = [UIColor colorWithWhite:0.7 alpha:1.0];
-  // 使用等宽数字字体，防止数字跳动
-  label.font = [UIFont monospacedDigitSystemFontOfSize:120
-                                                weight:UIFontWeightBold];
+  // 使用等宽数字字体，防止数字跳动，设置足够大的字体以充满 Box
+  label.font = [UIFont monospacedDigitSystemFontOfSize:150
+                                                weight:UIFontWeightRegular];
   label.textAlignment = NSTextAlignmentCenter;
   label.adjustsFontSizeToFitWidth = YES;
+  label.minimumScaleFactor = 0.5;
   [parent addSubview:label];
   [label mas_makeConstraints:^(MASConstraintMaker *make) {
     make.center.equalTo(parent);
-    make.width.equalTo(parent).multipliedBy(0.9);
+    make.width.equalTo(parent).multipliedBy(0.95);
+    make.height.equalTo(parent);
   }];
+  return label;
+}
+
+- (UILabel *)createColonLabel {
+  UILabel *label = [[UILabel alloc] init];
+  label.text = @":";
+  label.textColor = [UIColor colorWithWhite:0.5 alpha:1.0];
+  label.font = [UIFont systemFontOfSize:60 weight:UIFontWeightBold];
+  label.textAlignment = NSTextAlignmentCenter;
   return label;
 }
 
@@ -287,12 +341,40 @@
   self.dayLabel.text = weekdays[components.weekday];
 
   self.dateLabel.text =
-      [NSString stringWithFormat:@"%ld月%ld日 %ld", (long)components.month,
-                                 (long)components.day, (long)components.year];
+      [NSString stringWithFormat:@"%ld年 %ld月%ld日", (long)components.year, (long)components.month,(long)components.day];
+
+  // Blinking effect for ":"
+  CGFloat alpha = (self.colonLabel1.alpha > 0) ? 0.0 : 1.0;
+  [UIView animateWithDuration:0.2
+                   animations:^{
+                     self.colonLabel1.alpha = alpha;
+                     self.colonLabel2.alpha = alpha;
+                   }];
 }
 
 - (void)updateBattery {
-  float level = [UIDevice currentDevice].batteryLevel;
+  UIDevice *device = [UIDevice currentDevice];
+  float level = device.batteryLevel;
+  UIDeviceBatteryState state = device.batteryState;
+
+  BOOL isCharging = (state == UIDeviceBatteryStateCharging ||
+                     state == UIDeviceBatteryStateFull);
+  self.chargingIcon.hidden = !isCharging;
+
+  if (isCharging) {
+    UIColor *chargeColor = [UIColor colorWithRed:0.2
+                                           green:0.9
+                                            blue:0.2
+                                           alpha:1.0];
+    self.batteryLevelLabel.textColor = chargeColor;
+    self.batteryView.layer.borderColor = chargeColor.CGColor;
+    self.batteryNub.backgroundColor = chargeColor;
+  } else {
+    self.batteryLevelLabel.textColor = [UIColor whiteColor];
+    self.batteryView.layer.borderColor = [UIColor grayColor].CGColor;
+    self.batteryNub.backgroundColor = [UIColor grayColor];
+  }
+
   if (level < 0) {
     self.batteryLevelLabel.text = @"100%";
   } else {
