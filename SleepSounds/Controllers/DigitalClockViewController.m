@@ -17,6 +17,7 @@
 @property(nonatomic, strong) UIView *hourBox;
 @property(nonatomic, strong) UIView *minuteBox;
 @property(nonatomic, strong) UIView *secondBox;
+@property(nonatomic, strong) UIButton *closeBtn;
 
 @end
 
@@ -41,6 +42,12 @@
              name:UIDeviceBatteryStateDidChangeNotification
            object:nil];
   [self updateBattery];
+
+  UITapGestureRecognizer *tap =
+      [[UITapGestureRecognizer alloc] initWithTarget:self
+                                              action:@selector(handleTap)];
+  [self.view addGestureRecognizer:tap];
+  [self resetHideTimer];
 }
 
 - (void)dealloc {
@@ -86,21 +93,10 @@
                 action:@selector(closeAction)
       forControlEvents:UIControlEventTouchUpInside];
   [self.containerView addSubview:closeBtn];
+  self.closeBtn = closeBtn;
   [closeBtn mas_makeConstraints:^(MASConstraintMaker *make) {
     make.top.equalTo(self.containerView).offset(20);
     make.left.equalTo(self.containerView).offset(40);
-    make.width.height.mas_equalTo(44);
-  }];
-
-  // Rotate Button (Visual Parity)
-  UIButton *rotateBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-  [rotateBtn setImage:[UIImage systemImageNamed:@"arrow.triangle.2.circlepath"]
-             forState:UIControlStateNormal];
-  [rotateBtn setTintColor:[UIColor whiteColor]];
-  [self.containerView addSubview:rotateBtn];
-  [rotateBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-    make.centerY.equalTo(closeBtn);
-    make.left.equalTo(closeBtn.mas_right).offset(20);
     make.width.height.mas_equalTo(44);
   }];
 
@@ -135,18 +131,6 @@
   [self.batteryView addSubview:self.batteryLevelLabel];
   [self.batteryLevelLabel mas_makeConstraints:^(MASConstraintMaker *make) {
     make.edges.equalTo(self.batteryView);
-  }];
-
-  // Menu Button (Top Right)
-  UIButton *menuBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-  [menuBtn setImage:[UIImage systemImageNamed:@"line.3.horizontal"]
-           forState:UIControlStateNormal];
-  [menuBtn setTintColor:[UIColor whiteColor]];
-  [self.containerView addSubview:menuBtn];
-  [menuBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-    make.top.equalTo(self.containerView).offset(20);
-    make.right.equalTo(self.containerView).offset(-40);
-    make.width.height.mas_equalTo(44);
   }];
 
   // Clock Container
@@ -251,7 +235,9 @@
 - (UILabel *)createLargeTimeLabelInView:(UIView *)parent {
   UILabel *label = [[UILabel alloc] init];
   label.textColor = [UIColor colorWithWhite:0.7 alpha:1.0];
-  label.font = [UIFont systemFontOfSize:120 weight:UIFontWeightBold];
+  // 使用等宽数字字体，防止数字跳动
+  label.font = [UIFont monospacedDigitSystemFontOfSize:120
+                                                weight:UIFontWeightBold];
   label.textAlignment = NSTextAlignmentCenter;
   label.adjustsFontSizeToFitWidth = YES;
   [parent addSubview:label];
@@ -313,6 +299,34 @@
     self.batteryLevelLabel.text =
         [NSString stringWithFormat:@"%d%%", (int)(level * 100)];
   }
+}
+
+- (void)handleTap {
+  [NSObject cancelPreviousPerformRequestsWithTarget:self
+                                           selector:@selector(hideControls)
+                                             object:nil];
+
+  if (self.closeBtn.alpha < 1.0) {
+    [UIView animateWithDuration:0.3
+                     animations:^{
+                       self.closeBtn.alpha = 1.0;
+                     }];
+  }
+  [self resetHideTimer];
+}
+
+- (void)resetHideTimer {
+  [NSObject cancelPreviousPerformRequestsWithTarget:self
+                                           selector:@selector(hideControls)
+                                             object:nil];
+  [self performSelector:@selector(hideControls) withObject:nil afterDelay:2.0];
+}
+
+- (void)hideControls {
+  [UIView animateWithDuration:0.3
+                   animations:^{
+                     self.closeBtn.alpha = 0.0;
+                   }];
 }
 
 - (void)closeAction {
