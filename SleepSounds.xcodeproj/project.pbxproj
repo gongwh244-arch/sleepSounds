@@ -37,6 +37,9 @@
 		1EC118562EF6C2370064167C /* tv-white-noise-152056.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 1EC1184F2EF6C2370064167C /* tv-white-noise-152056.mp3 */; };
 		1EC118572EF6C2370064167C /* Jesse Pinkman's answer tone.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 1EC1184E2EF6C2370064167C /* Jesse Pinkman's answer tone.mp3 */; };
 		1EC118592EF6C7A10064167C /* sounds_config.json in Resources */ = {isa = PBXBuildFile; fileRef = 1EC118582EF6C7A10064167C /* sounds_config.json */; };
+		1EC1185C2EF8ED370064167C /* VIPViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1EC1185B2EF8ED370064167C /* VIPViewController.m */; };
+		1EC1185F2EF8ED460064167C /* SSStoreManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 1EC1185E2EF8ED460064167C /* SSStoreManager.m */; };
+		1EC118622EF8F0010064167C /* AboutUsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1EC118612EF8F0010064167C /* AboutUsViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -90,6 +93,12 @@
 		1EC118502EF6C2370064167C /* underwater-white-noise-46423.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "underwater-white-noise-46423.mp3"; sourceTree = "<group>"; };
 		1EC118512EF6C2370064167C /* wind-blowing-sfx-09-423678.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "wind-blowing-sfx-09-423678.mp3"; sourceTree = "<group>"; };
 		1EC118582EF6C7A10064167C /* sounds_config.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = sounds_config.json; sourceTree = "<group>"; };
+		1EC1185A2EF8ED370064167C /* VIPViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VIPViewController.h; sourceTree = "<group>"; };
+		1EC1185B2EF8ED370064167C /* VIPViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VIPViewController.m; sourceTree = "<group>"; };
+		1EC1185D2EF8ED460064167C /* SSStoreManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SSStoreManager.h; sourceTree = "<group>"; };
+		1EC1185E2EF8ED460064167C /* SSStoreManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SSStoreManager.m; sourceTree = "<group>"; };
+		1EC118602EF8F0010064167C /* AboutUsViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AboutUsViewController.h; sourceTree = "<group>"; };
+		1EC118612EF8F0010064167C /* AboutUsViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AboutUsViewController.m; sourceTree = "<group>"; };
 		3BB2B6725CFD6037EED7D838 /* Pods-SleepSounds.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SleepSounds.debug.xcconfig"; path = "Target Support Files/Pods-SleepSounds/Pods-SleepSounds.debug.xcconfig"; sourceTree = "<group>"; };
 		7CE7CE26FD7BCF8E68776A16 /* Pods-SleepSounds.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SleepSounds.release.xcconfig"; path = "Target Support Files/Pods-SleepSounds/Pods-SleepSounds.release.xcconfig"; sourceTree = "<group>"; };
 		C3B164A6CB0212ABEE15AAAF /* Pods_SleepSounds.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SleepSounds.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -137,6 +146,10 @@
 		1EC118082EF540D30064167C /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				1EC1185A2EF8ED370064167C /* VIPViewController.h */,
+				1EC1185B2EF8ED370064167C /* VIPViewController.m */,
+				1EC118602EF8F0010064167C /* AboutUsViewController.h */,
+				1EC118612EF8F0010064167C /* AboutUsViewController.m */,
 				1EC118372EF542B20064167C /* WQViewController.h */,
 				1EC118382EF542B20064167C /* WQViewController.m */,
 				1EC117F82EF540D30064167C /* BabyViewController.h */,
@@ -160,6 +173,8 @@
 		1EC1180B2EF540D30064167C /* Managers */ = {
 			isa = PBXGroup;
 			children = (
+				1EC1185D2EF8ED460064167C /* SSStoreManager.h */,
+				1EC1185E2EF8ED460064167C /* SSStoreManager.m */,
 				1EC1183C2EF661230064167C /* DataManager.h */,
 				1EC1183D2EF661230064167C /* DataManager.m */,
 				1EC118092EF540D30064167C /* AudioPlayerManager.h */,
@@ -388,6 +403,7 @@
 				1EC118252EF540D30064167C /* MainTabBarController.m in Sources */,
 				1EC118262EF540D30064167C /* MixerViewController.m in Sources */,
 				1EC118272EF540D30064167C /* ScreenLightViewController.m in Sources */,
+				1EC1185F2EF8ED460064167C /* SSStoreManager.m in Sources */,
 				1EC118282EF540D30064167C /* SettingsViewController.m in Sources */,
 				1EC118292EF540D30064167C /* SleepViewController.m in Sources */,
 				1EC1182A2EF540D30064167C /* ToolboxViewController.m in Sources */,
@@ -397,6 +413,8 @@
 				1EC1182E2EF540D30064167C /* SoundCell.m in Sources */,
 				1EC1182F2EF540D30064167C /* AppDelegate.m in Sources */,
 				1EC1183E2EF661230064167C /* DataManager.m in Sources */,
+				1EC1185C2EF8ED370064167C /* VIPViewController.m in Sources */,
+				1EC118622EF8F0010064167C /* AboutUsViewController.m in Sources */,
 				1EC118302EF540D30064167C /* main.m in Sources */,
 				1EC118392EF542B20064167C /* WQViewController.m in Sources */,
 				1EC118422EF67F0F0064167C /* UIDeviceExtension.swift in Sources */,
@@ -434,13 +452,12 @@
 				INFOPLIST_KEY_CFBundleDisplayName = "睡眠森林";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.0.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.gwq.SleepSounds;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -468,13 +485,12 @@
 				INFOPLIST_KEY_CFBundleDisplayName = "睡眠森林";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.0.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.gwq.SleepSounds;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -537,7 +553,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 18.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
@@ -593,7 +609,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 18.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;

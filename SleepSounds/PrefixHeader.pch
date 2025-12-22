@@ -10,6 +10,7 @@
 //常用 Manager 和 View
 #import "Managers/AudioPlayerManager.h"
 #import "Managers/DataManager.h"
+#import "Managers/SSStoreManager.h"
 #import "Models/SoundItem.h"
 #import "Views/PlayerControlView.h"
 #import "SleepSounds-Swift.h"

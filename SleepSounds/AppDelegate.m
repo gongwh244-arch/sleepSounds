@@ -8,6 +8,7 @@
 #import "AppDelegate.h"
 #import "Controllers/MainTabBarController.h"
 //@import FirebaseCore;
+#import "SSStoreManager.h"
 
 @interface AppDelegate ()
 
@@ -23,7 +24,7 @@
 
 	MainTabBarController *tabVC = [[MainTabBarController alloc] init];
 	self.window.rootViewController = tabVC;
-
+    [[SSStoreManager sharedManager] setup];
 	[self.window makeKeyAndVisible];
 	return YES;
 }
