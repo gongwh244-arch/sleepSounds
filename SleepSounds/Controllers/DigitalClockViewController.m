@@ -26,6 +26,16 @@
 @end
 
 @implementation DigitalClockViewController
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    // 禁用休眠计时器，使屏幕保持常亮
+    [[UIApplication sharedApplication] setIdleTimerDisabled:YES];
+}
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    // 页面离开时务必恢复原状，否则会导致 App 全局常亮，极其耗电
+    [[UIApplication sharedApplication] setIdleTimerDisabled:NO];
+}
 
 - (void)viewDidLoad {
   [super viewDidLoad];
