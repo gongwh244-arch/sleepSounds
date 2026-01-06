@@ -1,5 +1,6 @@
 #import "DigitalClockViewController.h"
 #import "Masonry.h"
+#import <CoreText/CoreText.h>
 
 @interface DigitalClockViewController ()
 
@@ -289,16 +290,42 @@
   UILabel *label = [[UILabel alloc] init];
   label.textColor = [UIColor colorWithWhite:0.7 alpha:1.0];
   // 使用等宽数字字体，防止数字跳动，设置足够大的字体以充满 Box
-  label.font = [UIFont monospacedDigitSystemFontOfSize:150
-                                                weight:UIFontWeightRegular];
+//  label.font = [UIFont monospacedDigitSystemFontOfSize:150
+//                                                weight:UIFontWeightRegular];
+    //-------
+//    UIFontDescriptor *systemDescriptor = [UIFont systemFontOfSize:150
+//                                                           weight:UIFontWeightBold].fontDescriptor;
+//    UIFontDescriptor *roundedDescriptor = [systemDescriptor fontDescriptorWithDesign:UIFontDescriptorSystemDesignRounded];
+//    // 2. 为了防止数字跳动，添加等宽数字特性 (Monospaced Numbers)
+//    UIFontDescriptor *monospacedDescriptor = [roundedDescriptor fontDescriptorByAddingAttributes:@{
+//        UIFontDescriptorFeatureSettingsAttribute: @[@{
+//            UIFontFeatureTypeIdentifierKey: @(kNumberSpacingType),
+//            UIFontFeatureSelectorIdentifierKey: @(kMonospacedNumbersSelector)
+//        }]
+//    }];
+//    // 3. 应用字体
+//    label.font = [UIFont fontWithDescriptor:monospacedDescriptor size:150];
+//    label.textColor = [UIColor systemGreenColor]; // 经典的荧光
+    //------
+    // 1. 使用自定义字体名称（注意：名称是字体文件内部的 PostScript 名称，不一定是文件名）
+    UIFont *digitalFont = [UIFont fontWithName:@"digital-7 mono" size:150];
+    // 2. 如果该字体支持 OpenType 等宽特性，可以这样设置
+    UIFontDescriptor *descriptor = [digitalFont.fontDescriptor fontDescriptorByAddingAttributes:@{
+        UIFontDescriptorFeatureSettingsAttribute: @[@{
+            UIFontFeatureTypeIdentifierKey: @(kNumberSpacingType),
+            UIFontFeatureSelectorIdentifierKey: @(kMonospacedNumbersSelector)
+        }]
+    }];
+    label.font = [UIFont fontWithDescriptor:descriptor size:150];
+    
   label.textAlignment = NSTextAlignmentCenter;
   label.adjustsFontSizeToFitWidth = YES;
   label.minimumScaleFactor = 0.5;
   [parent addSubview:label];
   [label mas_makeConstraints:^(MASConstraintMaker *make) {
-    make.center.equalTo(parent);
+    make.centerX.equalTo(parent);
     make.width.equalTo(parent).multipliedBy(0.95);
-    make.height.equalTo(parent);
+    make.centerY.equalTo(parent).offset(10);
   }];
   return label;
 }

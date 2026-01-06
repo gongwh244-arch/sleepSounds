@@ -40,18 +40,18 @@
 - (void)setupData {
   self.settingsItems = @[
     @[
-      @{@"title" : @"淡出时长", @"type" : @"click"},
-      @{@"title" : @"更换背景色", @"type" : @"click"},
-      @{@"title" : @"与其他 App 兼容播放", @"type" : @"switch"}
+        @{@"title" : @"淡出时长", @"type" : @"click",@"tag":@(1)},
+      @{@"title" : @"更换背景色", @"type" : @"click",@"tag":@(2)},
+      @{@"title" : @"充电自动显示屏保", @"type" : @"switch",@"tag":@(3)}
     ],
     @[
-      @{@"title" : YJFK, @"type" : @"click"},
-      @{@"title" : APPSTORE_Rate, @"type" : @"click"},
+      @{@"title" : YJFK, @"type" : @"click",@"tag":@(11)},
+      @{@"title" : APPSTORE_Rate, @"type" : @"click",@"tag":@(12)},
     ],
     @[
-      @{@"title" : YHYSZC, @"type" : @"click"},
-      @{@"title" : YHFWXY, @"type" : @"click"},
-      @{@"title" : GYWM, @"type" : @"click"}
+      @{@"title" : YHYSZC, @"type" : @"click",@"tag":@(21)},
+      @{@"title" : YHFWXY, @"type" : @"click",@"tag":@(22)},
+      @{@"title" : GYWM, @"type" : @"click",@"tag":@(23)}
     ]
   ];
 }
@@ -176,8 +176,17 @@
   cell.textLabel.text = item[@"title"];
 
   if ([item[@"type"] isEqualToString:@"switch"]) {
+      NSNumber *tagNumber = item[@"tag"];
     UISwitch *sw = [[UISwitch alloc] init];
-    sw.on = YES;
+      if (tagNumber) {
+          sw.tag = tagNumber.integerValue;
+      }
+      if (tagNumber.integerValue == 3) {
+            BOOL isOn = [[NSUserDefaults standardUserDefaults] boolForKey:@"ud_isChargerShowScreenSaver"];
+            sw.on = isOn;
+      }else{
+            sw.on = NO;
+      }
     [sw addTarget:self
                   action:@selector(switchChanged:)
         forControlEvents:UIControlEventValueChanged];
@@ -190,6 +199,11 @@
 }
 
 - (void)switchChanged:(UISwitch *)sender {
+    if (sender.tag == 3) {
+        
+        [[NSUserDefaults standardUserDefaults] setBool:sender.isOn forKey:@"ud_isChargerShowScreenSaver"];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+    }
   NSLog(@"Switch changed: %d", sender.isOn);
 }
 

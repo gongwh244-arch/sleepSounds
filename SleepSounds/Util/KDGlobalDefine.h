@@ -38,4 +38,6 @@
 #define WQUserServerLink  @"https://www.notion.so/2d0342f5772980efbfd4ff8cdab7d714"
 #define WQPrivacyPolicyLink  @"https://www.notion.so/2d0342f57729807ca477c94a8eb5ea95"
 
+#define AppDelegateInstance ((AppDelegate *)[UIApplication sharedApplication].delegate)
+
 #endif /* KDGlobalDefine_h */

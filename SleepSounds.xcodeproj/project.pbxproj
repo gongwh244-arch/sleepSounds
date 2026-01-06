@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		10F1F1D77D5E43CAB941C2A4 /* Pods_SleepSounds.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C3B164A6CB0212ABEE15AAAF /* Pods_SleepSounds.framework */; };
+		1E97DB7B2EFE85BE00B76C2A /* digital-7.mono.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1E97DB7A2EFE85BE00B76C2A /* digital-7.mono.ttf */; };
 		1EC118232EF540D30064167C /* BabyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1EC117F92EF540D30064167C /* BabyViewController.m */; };
 		1EC118242EF540D30064167C /* BreathingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1EC117FB2EF540D30064167C /* BreathingViewController.m */; };
 		1EC118252EF540D30064167C /* MainTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1EC117FD2EF540D30064167C /* MainTabBarController.m */; };
@@ -44,6 +45,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		1E97DB7A2EFE85BE00B76C2A /* digital-7.mono.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "digital-7.mono.ttf"; sourceTree = "<group>"; };
 		1EC117B22EF534A40064167C /* SleepSounds.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SleepSounds.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1EC117F82EF540D30064167C /* BabyViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BabyViewController.h; sourceTree = "<group>"; };
 		1EC117F92EF540D30064167C /* BabyViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BabyViewController.m; sourceTree = "<group>"; };
@@ -235,6 +237,7 @@
 				1EC118152EF540D30064167C /* AppDelegate.h */,
 				1EC118162EF540D30064167C /* AppDelegate.m */,
 				1EC118172EF540D30064167C /* Assets.xcassets */,
+				1E97DB7A2EFE85BE00B76C2A /* digital-7.mono.ttf */,
 				1EC1183F2EF663CB0064167C /* GoogleService-Info.plist */,
 				1EC118402EF661230064167D /* PrefixHeader.pch */,
 				1EC118182EF540D30064167C /* Info.plist */,
@@ -345,6 +348,7 @@
 				1EC118592EF6C7A10064167C /* sounds_config.json in Resources */,
 				1EC118402EF663CB0064167C /* GoogleService-Info.plist in Resources */,
 				1EC118352EF540D30064167C /* LaunchScreen.storyboard in Resources */,
+				1E97DB7B2EFE85BE00B76C2A /* digital-7.mono.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

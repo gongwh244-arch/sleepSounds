@@ -2,7 +2,7 @@ platform :ios, '13.0'
 
 target 'SleepSounds' do
   use_frameworks!
-
+  pod 'LookinServer', :configurations => ['Debug']
   pod 'Masonry'
 #  pod 'Firebase/Core'
 #  pod 'Firebase/Firestore'
