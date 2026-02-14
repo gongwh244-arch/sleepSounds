@@ -1,21 +1,22 @@
 #import "SSStoreManager.h"
 
-// VIP 状态变更的通知名称
 NSString *const SSVIPStatusChangedNotification =
     @"SSVIPStatusChangedNotification";
-// 在 App Store Connect 中配置的内购产品 ID
 NSString *const kSSVIPProductID = @"com.sleepsounds.vip.permanent";
-// 用于本地持久化存储 VIP 状态的 Key
 NSString *const kSSVIPStatusKey = @"isVIP";
 
 @interface SSStoreManager ()
 
-/**
- *  重新定义属性为可读写（Internal），方便在 .m 内部赋值。
- *  对外在 .h 中仍保持 readonly。
- */
 @property(nonatomic, strong, readwrite, nullable) SKProduct *vipProduct;
 @property(nonatomic, assign, readwrite) BOOL isVIP;
+
+// Completion blocks
+@property(nonatomic, copy) void (^fetchCompletion)
+    (BOOL success, NSString *price);
+@property(nonatomic, copy) void (^purchaseCompletion)
+    (BOOL success, NSString *errorMsg);
+@property(nonatomic, copy) void (^restoreCompletion)
+    (BOOL success, NSString *message);
 
 @end
 
@@ -40,30 +41,82 @@ NSString *const kSSVIPStatusKey = @"isVIP";
 
 - (void)setup {
   [[SKPaymentQueue defaultQueue] addTransactionObserver:self];
-  [self fetchProducts];
+  // Auto-fetch if not VIP
+  if (!self.isVIP) {
+    [self fetchProductWithCompletion:nil];
+  }
 }
 
-- (void)fetchProducts {
-  NSSet *productIdentifiers = [NSSet setWithObject:kSSVIPProductID];
-  SKProductsRequest *request =
-      [[SKProductsRequest alloc] initWithProductIdentifiers:productIdentifiers];
-  request.delegate = self;
-  [request start];
+- (NSString *)priceString {
+  if (self.vipProduct) {
+    NSNumberFormatter *formatter = [[NSNumberFormatter alloc] init];
+    formatter.numberStyle = NSNumberFormatterCurrencyStyle;
+    formatter.locale = self.vipProduct.priceLocale;
+    return [formatter stringFromNumber:self.vipProduct.price];
+  }
+  return nil;
 }
 
-- (void)purchaseVIP {
+#pragma mark - Public Methods
+
+- (void)fetchProductWithCompletion:(void (^)(BOOL success,
+                                             NSString *price))completion {
+  self.fetchCompletion = completion;
+
+  if (self.vipProduct) {
+    if (completion) {
+      completion(YES, self.priceString);
+    }
+    self.fetchCompletion = nil;
+    return;
+  }
+
+  if ([SKPaymentQueue canMakePayments]) {
+    NSSet *productIdentifiers = [NSSet setWithObject:kSSVIPProductID];
+    SKProductsRequest *request = [[SKProductsRequest alloc]
+        initWithProductIdentifiers:productIdentifiers];
+    request.delegate = self;
+    [request start];
+  } else {
+    if (completion) {
+      completion(NO, nil);
+    }
+    self.fetchCompletion = nil;
+  }
+}
+
+- (void)purchaseVIPWithCompletion:(void (^)(BOOL success,
+                                            NSString *errorMsg))completion {
+  self.purchaseCompletion = completion;
+
   if (!self.vipProduct) {
-    [self fetchProducts];
+    [self fetchProductWithCompletion:^(BOOL success, NSString *price) {
+      if (success) {
+        [self purchaseVIPWithCompletion:completion];
+      } else {
+        if (completion) {
+          completion(NO, @"无法获取商品信息，请稍后重试");
+        }
+        self.purchaseCompletion = nil;
+      }
+    }];
     return;
   }
 
   if ([SKPaymentQueue canMakePayments]) {
     SKPayment *payment = [SKPayment paymentWithProduct:self.vipProduct];
     [[SKPaymentQueue defaultQueue] addPayment:payment];
+  } else {
+    if (completion) {
+      completion(NO, @"您的设备禁止应用内购买");
+    }
+    self.purchaseCompletion = nil;
   }
 }
 
-- (void)restorePurchases {
+- (void)restorePurchasesWithCompletion:(void (^)(BOOL success,
+                                                 NSString *message))completion {
+  self.restoreCompletion = completion;
   [[SKPaymentQueue defaultQueue] restoreCompletedTransactions];
 }
 
@@ -71,11 +124,25 @@ NSString *const kSSVIPStatusKey = @"isVIP";
 
 - (void)productsRequest:(SKProductsRequest *)request
      didReceiveResponse:(SKProductsResponse *)response {
-  for (SKProduct *product in response.products) {
-    if ([product.productIdentifier isEqualToString:kSSVIPProductID]) {
-      self.vipProduct = product;
-      break;
+  if (response.products.count > 0) {
+    self.vipProduct = response.products.firstObject;
+    if (self.fetchCompletion) {
+      self.fetchCompletion(YES, self.priceString);
     }
+  } else {
+    if (self.fetchCompletion) {
+      self.fetchCompletion(NO, nil);
+    }
+  }
+  self.fetchCompletion = nil;
+}
+
+- (void)request:(SKRequest *)request didFailWithError:(NSError *)error {
+  if ([request isKindOfClass:[SKProductsRequest class]]) {
+    if (self.fetchCompletion) {
+      self.fetchCompletion(NO, nil);
+    }
+    self.fetchCompletion = nil;
   }
 }
 
@@ -86,37 +153,94 @@ NSString *const kSSVIPStatusKey = @"isVIP";
   for (SKPaymentTransaction *transaction in transactions) {
     switch (transaction.transactionState) {
     case SKPaymentTransactionStatePurchased:
-    case SKPaymentTransactionStateRestored:
       [self completeTransaction:transaction];
       break;
     case SKPaymentTransactionStateFailed:
       [self failedTransaction:transaction];
       break;
-    default:
+    case SKPaymentTransactionStateRestored:
+      [self restoreTransaction:transaction];
+      break;
+    case SKPaymentTransactionStateDeferred:
+    case SKPaymentTransactionStatePurchasing:
       break;
     }
   }
 }
 
+- (void)paymentQueueRestoreCompletedTransactionsFinished:
+    (SKPaymentQueue *)queue {
+  // Check if we actually restored VIP
+  // Since restoreTransaction calls unlockVIP which sets isVIP, we check that.
+  // However, restoreTransaction might happens BEFORE this finish callback.
+  // If user has no transactions, this is called without restoreTransaction
+  // being called.
+
+  if (self.restoreCompletion) {
+    if (self.isVIP) {
+      self.restoreCompletion(YES, @"恢复购买成功");
+    } else {
+      self.restoreCompletion(NO, @"未找到可恢复的购买记录");
+    }
+  }
+  self.restoreCompletion = nil;
+}
+
+- (void)paymentQueue:(SKPaymentQueue *)queue
+    restoreCompletedTransactionsFailedWithError:(NSError *)error {
+  if (self.restoreCompletion) {
+    if (error.code == SKErrorPaymentCancelled) {
+      self.restoreCompletion(NO, @"用户取消恢复");
+    } else {
+      self.restoreCompletion(NO, error.localizedDescription ?: @"恢复购买失败");
+    }
+  }
+  self.restoreCompletion = nil;
+}
+
 - (void)completeTransaction:(SKPaymentTransaction *)transaction {
   [self unlockVIP];
   [[SKPaymentQueue defaultQueue] finishTransaction:transaction];
+
+  if (self.purchaseCompletion) {
+    self.purchaseCompletion(YES, nil);
+    self.purchaseCompletion = nil;
+  }
 }
 
-- (void)failedTransaction:(SKPaymentTransaction *)transaction {
-  if (transaction.error.code != SKErrorPaymentCancelled) {
-    // 记录错误或提示
+- (void)restoreTransaction:(SKPaymentTransaction *)transaction {
+  if ([transaction.payment.productIdentifier isEqualToString:kSSVIPProductID]) {
+    [self unlockVIP];
   }
   [[SKPaymentQueue defaultQueue] finishTransaction:transaction];
 }
 
+- (void)failedTransaction:(SKPaymentTransaction *)transaction {
+  NSString *errorMsg = nil;
+  if (transaction.error.code == SKErrorPaymentCancelled) {
+    errorMsg = @"用户取消购买";
+  } else {
+    errorMsg = transaction.error.localizedDescription ?: @"购买失败";
+  }
+
+  [[SKPaymentQueue defaultQueue] finishTransaction:transaction];
+
+  if (self.purchaseCompletion) {
+    self.purchaseCompletion(NO, errorMsg);
+    self.purchaseCompletion = nil;
+  }
+}
+
 - (void)unlockVIP {
-  self.isVIP = YES;
-  [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kSSVIPStatusKey];
-  [[NSUserDefaults standardUserDefaults] synchronize];
-  [[NSNotificationCenter defaultCenter]
-      postNotificationName:SSVIPStatusChangedNotification
-                    object:nil];
+  // Only update if not already VIP to avoid loop triggers or redundant saves
+  if (!self.isVIP) {
+    self.isVIP = YES;
+    [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kSSVIPStatusKey];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+    [[NSNotificationCenter defaultCenter]
+        postNotificationName:SSVIPStatusChangedNotification
+                      object:nil];
+  }
 }
 
 @end
