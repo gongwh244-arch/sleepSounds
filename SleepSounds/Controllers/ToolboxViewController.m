@@ -1,6 +1,7 @@
 #import "ToolboxViewController.h"
-#import "../Models/SoundItem.h" // Reusing SoundItem for simplicity as data model
-#import "../Views/SoundCell.h"  // Reusing SoundCell
+#import "../Models/SoundItem.h"
+#import "../Views/SoundCell.h"
+#import "../Common/SSLocalization.h"
 #import "BreathingViewController.h"
 #import "DigitalClockViewController.h"
 #import "ScreenLightViewController.h"
@@ -30,7 +31,7 @@
 - (void)setupData {
   self.tools = [NSMutableArray array];
   NSArray *names =
-      @[ @"减压", @"数字时钟", @"边框修图大师", @"拍立得相框", @"屏幕常亮灯" ];
+      @[ SSToolBreathing, SSToolDigitalClock, @"边框修图大师", @"拍立得相框", SSToolScreenLight ];
   NSArray *icons = @[
     @"drop.fill", @"clock.fill", @"square.dashed", @"photo.on.rectangle",
     @"lightbulb.fill"
@@ -48,7 +49,6 @@
   UICollectionViewFlowLayout *layout =
       [[UICollectionViewFlowLayout alloc] init];
 
-  // 2 Columns
   CGFloat screenWidth = [UIScreen mainScreen].bounds.size.width;
   CGFloat hPadding = 20;
   CGFloat interItemSpacing = 15;
@@ -57,7 +57,6 @@
   CGFloat totalSpacing =
       (2 * hPadding) + ((itemsPerRow - 1) * interItemSpacing);
   CGFloat itemWidth = (screenWidth - totalSpacing) / itemsPerRow;
-  // Taller cells
   layout.itemSize = CGSizeMake(itemWidth, itemWidth * 1.2);
   layout.sectionInset = UIEdgeInsetsMake(20, hPadding, 20, hPadding);
   layout.minimumInteritemSpacing = interItemSpacing;
@@ -88,13 +87,7 @@
       [collectionView dequeueReusableCellWithReuseIdentifier:@"ToolCell"
                                                 forIndexPath:indexPath];
   SoundItem *item = self.tools[indexPath.row];
-  // Reusing configure, ignoring 'locked' and 'playing' visual states usage for
-  // now
   [cell configureWithIcon:item.iconName name:item.name isLocked:NO];
-
-  // Customization for Toolbox look if needed
-  // cell.iconImageView.transform = CGAffineTransformMakeScale(1.5, 1.5); //
-  // Make icons bigger
 
   return cell;
 }
@@ -105,21 +98,21 @@
     didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
   SoundItem *item = self.tools[indexPath.row];
 
-  if ([item.name isEqualToString:@"屏幕常亮灯"]) {
+  if ([item.name isEqualToString:SSToolScreenLight]) {
     ScreenLightViewController *vc = [[ScreenLightViewController alloc] init];
     vc.modalPresentationStyle = UIModalPresentationFullScreen;
     [self presentViewController:vc animated:YES completion:nil];
     return;
   }
 
-  if ([item.name isEqualToString:@"减压"]) {
+  if ([item.name isEqualToString:SSToolBreathing]) {
     BreathingViewController *vc = [[BreathingViewController alloc] init];
     vc.modalPresentationStyle = UIModalPresentationFullScreen;
     [self presentViewController:vc animated:YES completion:nil];
     return;
   }
 
-  if ([item.name isEqualToString:@"数字时钟"]) {
+  if ([item.name isEqualToString:SSToolDigitalClock]) {
     DigitalClockViewController *vc = [[DigitalClockViewController alloc] init];
     vc.modalPresentationStyle = UIModalPresentationFullScreen;
     [self presentViewController:vc animated:YES completion:nil];
@@ -128,9 +121,9 @@
 
   UIAlertController *alert =
       [UIAlertController alertControllerWithTitle:item.name
-                                          message:@"Tool feature coming soon."
+                                          message:SSFeatureComingSoon
                                    preferredStyle:UIAlertControllerStyleAlert];
-  [alert addAction:[UIAlertAction actionWithTitle:@"OK"
+  [alert addAction:[UIAlertAction actionWithTitle:SSOKButtonTitle
                                             style:UIAlertActionStyleDefault
                                           handler:nil]];
   [self presentViewController:alert animated:YES completion:nil];

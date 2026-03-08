@@ -1,0 +1,30 @@
+/* General Buttons */
+"Close" = "关闭";
+"Cancel" = "取消";
+"OK" = "确定";
+
+/* Timer */
+"Set Sleep Timer" = "设置睡眠定时器";
+"15 Minutes" = "15分钟";
+"30 Minutes" = "30分钟";
+"1 Hour" = "1小时";
+"Cancel Timer" = "取消定时";
+
+/* VIP */
+"VIP Required" = "需要VIP";
+"This sound is locked." = "此声音已锁定。";
+"Upgrade to VIP to unlock this sound." = "升级到VIP以解锁此声音。";
+
+/* Other */
+"Please play a sound first" = "请先播放声音";
+"Feature coming soon" = "功能即将推出";
+
+/* Categories */
+"Shush" = "嘘声哄睡";
+"White Noise" = "白噪音";
+"Nature" = "自然";
+
+/* Tools */
+"Breathing" = "减压";
+"Digital Clock" = "数字时钟";
+"Screen Light" = "屏幕常亮灯";

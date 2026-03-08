@@ -4,6 +4,8 @@
 #import "../Models/SoundItem.h"
 #import "../Views/PlayerControlView.h"
 #import "../Views/SoundCell.h"
+#import "../Common/SSNotificationConstants.h"
+#import "../Common/SSLocalization.h"
 #import "MainTabBarController.h"
 #import "Masonry.h"
 #import "MixerViewController.h"
@@ -41,13 +43,13 @@
 
 	[[NSNotificationCenter defaultCenter] addObserver:self
 											 selector:@selector(vipStatusChanged)
-												 name:@"VIPStatusChanged"
+												 name:SSVIPStatusChangedNotification
 											   object:nil];
 
 	[[NSNotificationCenter defaultCenter]
 		addObserver:self
 		   selector:@selector(handleTimerExpired)
-			   name:@"AudioTimerExpired"
+			   name:SSAudioTimerExpiredNotification
 			 object:nil];
 }
 
@@ -58,7 +60,6 @@
 - (void)vipStatusChanged {
 	[self setupData];
 	[self.collectionView reloadData];
-	// Also toggle banner visibility if needed
 	BOOL isVip = [[NSUserDefaults standardUserDefaults] boolForKey:@"isVip"];
 	self.vipBannerView.hidden = isVip;
 }
@@ -87,7 +88,6 @@
 							} else if ([item.subCategory isEqualToString:@"nature"]) {
 								[natureItems addObject:item];
 							} else {
-								// Fallback or default
 								[whiteNoiseItems addObject:item];
 							}
 						}
@@ -96,7 +96,7 @@
 							weakSelf.sections =
 								@[ shushItems, whiteNoiseItems, natureItems ];
 							weakSelf.sectionTitles =
-								@[ @"嘘声哄睡", @"白噪音", @"自然" ];
+								@[ SSShushCategory, SSWhiteNoiseCategory, SSNatureCategory ];
 							[weakSelf.collectionView reloadData];
 						});
 					}];
@@ -144,7 +144,7 @@
 		CGSizeMake([UIScreen mainScreen].bounds.size.width, 40);
 
 	CGFloat screenWidth = [UIScreen mainScreen].bounds.size.width;
-	CGFloat itemWidth = (screenWidth - 60) / 3.0; // 3 items
+	CGFloat itemWidth = (screenWidth - 60) / 3.0;
 
 	layout.itemSize = CGSizeMake(itemWidth, itemWidth);
 	layout.sectionInset = UIEdgeInsetsMake(10, 15, 20, 15);
@@ -203,7 +203,6 @@
 											   withReuseIdentifier:@"Header"
 													  forIndexPath:indexPath];
 
-		// Remove old labels if reusing
 		for (UIView *view in header.subviews) {
 			if ([view isKindOfClass:[UILabel class]]) {
 				[view removeFromSuperview];
@@ -229,10 +228,10 @@
 
 	if (item.isLocked) {
 		UIAlertController *alert = [UIAlertController
-			alertControllerWithTitle:@"VIP Only"
-							 message:@"Upgrade to VIP to unlock this sound."
+			alertControllerWithTitle:SSVIPRequired
+							 message:SSVPIMessage
 					  preferredStyle:UIAlertControllerStyleAlert];
-		[alert addAction:[UIAlertAction actionWithTitle:@"Cancel"
+		[alert addAction:[UIAlertAction actionWithTitle:SSCancelButtonTitle
 												  style:UIAlertActionStyleCancel
 												handler:nil]];
 		[self presentViewController:alert animated:YES completion:nil];
@@ -261,7 +260,6 @@
 			}
 		}
 	}
-	//  [[PlayerControlView sharedInstance] setIsPlaying:anyPlaying];
 }
 
 - (void)handleTimerExpired {
@@ -309,7 +307,6 @@
 				}
 			}
 		} else {
-			// Default fallback
 			for (NSArray *section in self.sections) {
 				for (SoundItem *item in section) {
 					if (!item.isLocked) {
@@ -329,12 +326,12 @@
 
 - (void)didTapTimer {
 	UIAlertController *alert = [UIAlertController
-		alertControllerWithTitle:@"Set Sleep Timer"
+		alertControllerWithTitle:SSTimerTitle
 						 message:nil
 				  preferredStyle:UIAlertControllerStyleActionSheet];
 
 	[alert addAction:[UIAlertAction
-						 actionWithTitle:@"15 Minutes"
+						 actionWithTitle:SSTimer15Minutes
 								   style:UIAlertActionStyleDefault
 								 handler:^(UIAlertAction *_Nonnull action) {
 									 [[AudioPlayerManager sharedManager]
@@ -342,7 +339,7 @@
 								 }]];
 
 	[alert addAction:[UIAlertAction
-						 actionWithTitle:@"30 Minutes"
+						 actionWithTitle:SSTimer30Minutes
 								   style:UIAlertActionStyleDefault
 								 handler:^(UIAlertAction *_Nonnull action) {
 									 [[AudioPlayerManager sharedManager]
@@ -350,7 +347,7 @@
 								 }]];
 
 	[alert addAction:[UIAlertAction
-						 actionWithTitle:@"1 Hour"
+						 actionWithTitle:SSTimer1Hour
 								   style:UIAlertActionStyleDefault
 								 handler:^(UIAlertAction *_Nonnull action) {
 									 [[AudioPlayerManager sharedManager]
@@ -358,14 +355,14 @@
 								 }]];
 
 	[alert addAction:[UIAlertAction
-						 actionWithTitle:@"Cancel Timer"
+						 actionWithTitle:SSCancelTimer
 								   style:UIAlertActionStyleDestructive
 								 handler:^(UIAlertAction *_Nonnull action) {
 									 [[AudioPlayerManager sharedManager]
 										 cancelTimer];
 								 }]];
 
-	[alert addAction:[UIAlertAction actionWithTitle:@"Close"
+	[alert addAction:[UIAlertAction actionWithTitle:SSCloseButtonTitle
 											  style:UIAlertActionStyleCancel
 											handler:nil]];
 

@@ -1,5 +1,6 @@
 #import "AudioPlayerManager.h"
 #import "../Models/SoundItem.h"
+#import "../Common/SSNotificationConstants.h"
 #import <AVFoundation/AVFoundation.h>
 
 @interface AudioPlayerManager ()
@@ -27,8 +28,7 @@
 - (instancetype)init {
 	self = [super init];
 	if (self) {
-		_activePlayers = [[NSMutableDictionary alloc]
-			init]; // MRC: need to release in dealloc if this were not a singleton
+		_activePlayers = [[NSMutableDictionary alloc] init];
 		[self configureAudioSession];
 
 		// Load persisted last played sounds
@@ -39,6 +39,14 @@
 		}
 	}
 	return self;
+}
+
+- (void)dealloc {
+	[self cancelTimer];
+	for (AVAudioPlayer *player in self.activePlayers.allValues) {
+		[player stop];
+	}
+	[self.activePlayers removeAllObjects];
 }
 
 - (void)configureAudioSession {
@@ -215,7 +223,7 @@
 			   afterDelay:fadeDuration + 0.1];
 	[self cancelTimer];
 	[[NSNotificationCenter defaultCenter]
-		postNotificationName:@"AudioTimerExpired"
+		postNotificationName:SSAudioTimerExpiredNotification
 					  object:nil];
 }
 

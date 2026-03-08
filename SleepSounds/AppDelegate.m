@@ -7,7 +7,6 @@
 
 #import "AppDelegate.h"
 #import "Controllers/MainTabBarController.h"
-//@import FirebaseCore;
 #import "SSStoreManager.h"
 
 @interface AppDelegate ()

@@ -1,7 +1,6 @@
 #import "SSStoreManager.h"
+#import "../Common/SSNotificationConstants.h"
 
-NSString *const SSVIPStatusChangedNotification =
-    @"SSVIPStatusChangedNotification";
 NSString *const kSSVIPProductID = @"com.sleepsounds.vip.permanent";
 NSString *const kSSVIPStatusKey = @"isVIP";
 
@@ -170,12 +169,6 @@ NSString *const kSSVIPStatusKey = @"isVIP";
 
 - (void)paymentQueueRestoreCompletedTransactionsFinished:
     (SKPaymentQueue *)queue {
-  // Check if we actually restored VIP
-  // Since restoreTransaction calls unlockVIP which sets isVIP, we check that.
-  // However, restoreTransaction might happens BEFORE this finish callback.
-  // If user has no transactions, this is called without restoreTransaction
-  // being called.
-
   if (self.restoreCompletion) {
     if (self.isVIP) {
       self.restoreCompletion(YES, @"恢复购买成功");
@@ -232,7 +225,6 @@ NSString *const kSSVIPStatusKey = @"isVIP";
 }
 
 - (void)unlockVIP {
-  // Only update if not already VIP to avoid loop triggers or redundant saves
   if (!self.isVIP) {
     self.isVIP = YES;
     [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kSSVIPStatusKey];

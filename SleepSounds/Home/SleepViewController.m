@@ -4,6 +4,8 @@
 #import "../Models/SoundItem.h"
 #import "../Views/PlayerControlView.h"
 #import "../Views/SoundCell.h"
+#import "../Common/SSNotificationConstants.h"
+#import "../Common/SSLocalization.h"
 #import "MainTabBarController.h"
 #import "Masonry.h"
 #import "MixerViewController.h"
@@ -37,13 +39,13 @@
 
   [[NSNotificationCenter defaultCenter] addObserver:self
                                            selector:@selector(vipStatusChanged)
-                                               name:@"VIPStatusChanged"
+                                               name:SSVIPStatusChangedNotification
                                              object:nil];
 
   [[NSNotificationCenter defaultCenter]
       addObserver:self
          selector:@selector(handleTimerExpired)
-             name:@"AudioTimerExpired"
+             name:SSAudioTimerExpiredNotification
            object:nil];
 }
 
@@ -52,7 +54,7 @@
 }
 
 - (void)vipStatusChanged {
-  [self setupData]; // Re-create items with new VIP state
+  [self setupData];
   [self.collectionView reloadData];
 }
 
@@ -65,7 +67,6 @@
                            NSError *_Nullable error) {
         if (error) {
           NSLog(@"Failed to fetch sounds: %@", error);
-          // Fallback or show error
           return;
         }
 
@@ -147,10 +148,10 @@
 
   if (item.isLocked) {
     UIAlertController *alert = [UIAlertController
-        alertControllerWithTitle:@"VIP Required"
-                         message:@"This sound is locked."
+        alertControllerWithTitle:SSVIPRequired
+                         message:SSVIPLockedMessage
                   preferredStyle:UIAlertControllerStyleAlert];
-    [alert addAction:[UIAlertAction actionWithTitle:@"OK"
+    [alert addAction:[UIAlertAction actionWithTitle:SSOKButtonTitle
                                               style:UIAlertActionStyleCancel
                                             handler:nil]];
     [self presentViewController:alert animated:YES completion:nil];
@@ -210,7 +211,6 @@
     NSArray *lastPlayed =
         [AudioPlayerManager sharedManager].lastPlayedSoundNames;
     if (lastPlayed.count > 0) {
-      // 播放上一次记录的所有声音
       for (SoundItem *item in self.soundItems) {
         if ([lastPlayed containsObject:item.name]) {
           item.isPlaying = YES;
@@ -218,7 +218,6 @@
         }
       }
     } else {
-      // 如果没有记录，播放第一个未锁定的
       for (SoundItem *item in self.soundItems) {
         if (!item.isLocked) {
           item.isPlaying = YES;
@@ -235,12 +234,12 @@
 
 - (void)didTapTimer {
   if ([[AudioPlayerManager sharedManager] activeSoundNames].count == 0) {
-    [self showToast:@"请先播放声音再设置定时器"];
+    [self showToast:SSNoSoundPlayingTip];
     return;
   }
 
   UIAlertController *alert =
-      [UIAlertController alertControllerWithTitle:@"Set Sleep Timer"
+      [UIAlertController alertControllerWithTitle:SSTimerTitle
                                           message:nil
                                    preferredStyle:UIAlertControllerStyleAlert];
 
@@ -255,7 +254,7 @@
 #endif
 
   [alert addAction:[UIAlertAction
-                       actionWithTitle:@"15 Minutes"
+                       actionWithTitle:SSTimer15Minutes
                                  style:UIAlertActionStyleDefault
                                handler:^(UIAlertAction *_Nonnull action) {
                                  [[AudioPlayerManager sharedManager]
@@ -263,7 +262,7 @@
                                }]];
 
   [alert addAction:[UIAlertAction
-                       actionWithTitle:@"30 Minutes"
+                       actionWithTitle:SSTimer30Minutes
                                  style:UIAlertActionStyleDefault
                                handler:^(UIAlertAction *_Nonnull action) {
                                  [[AudioPlayerManager sharedManager]
@@ -271,7 +270,7 @@
                                }]];
 
   [alert addAction:[UIAlertAction
-                       actionWithTitle:@"1 Hour"
+                       actionWithTitle:SSTimer1Hour
                                  style:UIAlertActionStyleDefault
                                handler:^(UIAlertAction *_Nonnull action) {
                                  [[AudioPlayerManager sharedManager]
@@ -279,14 +278,14 @@
                                }]];
 
   [alert addAction:[UIAlertAction
-                       actionWithTitle:@"cancel Timer"
+                       actionWithTitle:SSCancelTimer
                                  style:UIAlertActionStyleDestructive
                                handler:^(UIAlertAction *_Nonnull action) {
                                  [[AudioPlayerManager sharedManager]
                                      cancelTimer];
                                }]];
 
-  [alert addAction:[UIAlertAction actionWithTitle:@"Close"
+  [alert addAction:[UIAlertAction actionWithTitle:SSCloseButtonTitle
                                             style:UIAlertActionStyleCancel
                                           handler:nil]];
 

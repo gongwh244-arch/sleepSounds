@@ -1,0 +1,30 @@
+/* General Buttons */
+"Close" = "Close";
+"Cancel" = "Cancel";
+"OK" = "OK";
+
+/* Timer */
+"Set Sleep Timer" = "Set Sleep Timer";
+"15 Minutes" = "15 Minutes";
+"30 Minutes" = "30 Minutes";
+"1 Hour" = "1 Hour";
+"Cancel Timer" = "Cancel Timer";
+
+/* VIP */
+"VIP Required" = "VIP Required";
+"This sound is locked." = "This sound is locked.";
+"Upgrade to VIP to unlock this sound." = "Upgrade to VIP to unlock this sound.";
+
+/* Other */
+"Please play a sound first" = "Please play a sound first";
+"Feature coming soon" = "Feature coming soon";
+
+/* Categories */
+"Shush" = "Shush";
+"White Noise" = "White Noise";
+"Nature" = "Nature";
+
+/* Tools */
+"Breathing" = "Breathing";
+"Digital Clock" = "Digital Clock";
+"Screen Light" = "Screen Light";
